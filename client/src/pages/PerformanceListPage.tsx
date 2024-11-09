@@ -13,7 +13,7 @@ const PerformanceListPage = () => {
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_SERVER_URL}/performance/get-all`, { headers: { 'Content-Type': 'application/json' } })
-      .then(res => console.log(res))
+      .then(res => setPerformances(res.data))
       .catch(err => console.log(err));
   }, []);
 
@@ -31,7 +31,6 @@ const PerformanceListPage = () => {
   const navigate = useNavigate();
 
   const handlePosterClick = (id: string) => {
-    alert(`공연 ${id}을 선택하셨습니다.`);
     navigate(`/performance/${id}`);
   };
 
