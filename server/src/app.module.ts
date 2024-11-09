@@ -39,6 +39,7 @@ import dbConfig from './config/db.config';
     UserModule,
     AwsModule,
   ],
+  
   controllers: [AppController, AuthController, UserController],
   providers: [AppService, AuthService],
 })

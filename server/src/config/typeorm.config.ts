@@ -3,6 +3,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import dbConfig from './db.config';
 
 export const TypeormConfig = (config: ConfigType<typeof dbConfig>) => {
+  
   const option: TypeOrmModuleOptions = {
     type: 'postgres',
     host: config.host,
@@ -14,5 +15,7 @@ export const TypeormConfig = (config: ConfigType<typeof dbConfig>) => {
     synchronize: config.env === 'production' ? false : true,
     logging: true,
   };
+
   return option;
+
 };

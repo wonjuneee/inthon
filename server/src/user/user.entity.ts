@@ -1,22 +1,28 @@
 import { CommonEntity } from 'src/common/common.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
+import { OneToOne } from 'typeorm';
+import { Egg } from 'src/egg/egg.entity';
+import { OneToMany } from 'typeorm';
+import { type } from 'os';
+@Entity('user')
 
-@Entity('users')
-
-export class UserEntity extends CommonEntity {
+export class User extends CommonEntity {
 
   @PrimaryGeneratedColumn()
-  id: string;
-
-  @Column()
   username: string;
 
   @Column()
-  password: string;
+  currEgg: number;
+
+  @Column()
+  contains: number[];
+
+  @OneToOne(()=> Egg)
+  @JoinColumn()
+  currentEgg: Egg;
+
+  @OneToMany(()=> Egg, egg => egg.id)
+  @JoinColumn()
+  eggs: Egg[];
+
 }
