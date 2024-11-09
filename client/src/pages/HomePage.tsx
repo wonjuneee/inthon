@@ -5,7 +5,6 @@ import { STEP, Egg } from '../models/egg';
 import { Art } from '../models/art';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from '../components/context/AuthContent';
 import { questions } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,17 +18,21 @@ const step_images: Record<STEP, string> = {
 const HomePage: React.FC = () => {
   const [eggData, setEggData] = useState<Egg | null>(null);
   const [artData, setArtData] = useState<Art | null>(null);
-  const { user, isLoggedIn } = useAuth();
   const { token } = theme.useToken();
   const navigate = useNavigate();
 
   useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
+
+    if (!user) return;
+
     async function fetchEggData() {
-      if (!user || !isLoggedIn) return;
       try {
         const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-current`, {
           params: { username: user.username },
         });
+        console.log('응답:', response);
         if (response.status === 200) {
           setEggData(response.data.egg);
           setArtData(response.data.art);
@@ -39,7 +42,7 @@ const HomePage: React.FC = () => {
       }
     }
     fetchEggData();
-  }, [user, isLoggedIn]);
+  }, []);
 
   const imageSrc = eggData?.step !== undefined && eggData?.step !== null ? step_images[eggData.step as STEP] : '/assets/egg.png';
   const backgroundImageSrc = eggData?.step === STEP.butterfly ? '/assets/flower.png' : '/assets/leaf.png';

@@ -2,7 +2,6 @@ import { Layout, Typography, Row, Col, Card } from 'antd';
 import axios from 'axios';
 import { Egg } from '../models/egg';
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../components/context/AuthContent';
 
 const ButterflyContainerPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
