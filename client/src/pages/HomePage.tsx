@@ -23,8 +23,8 @@ const HomePage: React.FC<HomepageProps> = ({ step }) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
       <Layout style={{ width: 402, height: 874, background: token.colorBgBase, position: 'relative', overflow: 'hidden' }}>
-        <Image src={'/assets/leaf.png'} alt={`Stage ${step}`} className="absolute inset-0 w-full h-full object-cover z-1" />
-        <Image src={'/assets/egg.png'} alt={`Stage ${step}`} className="absolute inset-0 w-full h-full object-cover z-1" />
+        <img src={'/assets/leaf.png'} className="bg-img" />
+        <img src={'/assets/egg.png'} className="bg-img" />
         <div className="flex justify-center items-center relative z-10">
           <div className="p-16">
             <button onClick={handleQuestClick} className="flex justify-center items-center">
