@@ -1,1 +1,10 @@
 .DS_Store
+
+culture_info/venv/
+culture_info/.env
+culture_info/celerybeat-schedule.db
+culture_info/etl.log
+
+object_detection/venv/
+object_detection/images/
+object_detection/.env

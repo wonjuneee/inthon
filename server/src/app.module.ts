@@ -11,7 +11,14 @@ import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 import { AwsModule } from './aws/aws.module';
 import { TypeormConfig } from './config/typeorm.config';
+import { ImagesController } from './image/image.controller';
+import { ImagesModule } from './image/image.module';
+import { ImageService } from './image/image.service';
+import { PerformanceModule } from './performance/performance.module';
+import { PerformanceController } from './performance/performance.controller';
 import dbConfig from './config/db.config';
+import { PerformanceService } from './performance/performance.service';
+import { AwsService } from './aws/aws.service';
 
 @Module({
   imports: [
@@ -23,24 +30,21 @@ import dbConfig from './config/db.config';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule.forFeature(dbConfig)],
       inject: [dbConfig.KEY],
-      useFactory: (config: ConfigType<typeof dbConfig>) => ({
-        type: 'postgres',
-        host: config.host,
-        port: config.port,
-        username: config.username,
-        password: config.password,
-        database: config.database,
-        entities: [__dirname + '/*/*.entity{.ts,.js}'],
-        synchronize: config.env === 'production' ? false : true,
-        logging: true,
-      }),
+      useFactory: TypeormConfig,
     }),
     AuthModule,
     UserModule,
     AwsModule,
+    ImagesModule,
+    PerformanceModule,
   ],
-  
-  controllers: [AppController, AuthController, UserController],
+  controllers: [
+    AppController,
+    AuthController,
+    UserController,
+    ImagesController,
+    PerformanceController,
+  ],
   providers: [AppService, AuthService],
 })
 export class AppModule {}
