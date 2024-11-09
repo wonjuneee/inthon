@@ -33,9 +33,10 @@ export class EggService {
   }
 
   async getButterflies(username: string): Promise<ButterflyDto[]> {
+    const user = await this.userService.getUser(username);
     const eggs = await this.eggRepository.find({
       select: ['id', 'color'],
-      where: { username: username, step: 3 } as any,
+      where: { user: user, step: 3 } as any,
     });
 
     return eggs.map((egg) => {
