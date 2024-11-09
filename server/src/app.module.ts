@@ -31,7 +31,7 @@ import dbConfig from './config/db.config';
     AwsModule,
     PerformanceModule,
   ],
-  controllers: [AppController, AuthController, PerformanceController],
+  controllers: [AppController, AuthController],
   providers: [AppService, AuthService],
 })
 export class AppModule {}
