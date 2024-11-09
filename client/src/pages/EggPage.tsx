@@ -5,26 +5,16 @@ import React, { useEffect, useState } from 'react';
 
 const EggPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
-  const [user, setUser] = useState<{ username: string; currEgg: number } | null>(null);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  const username = localStorage.getItem('username');
+
   const fetchEggList = async () => {
-    if (!user) {
-      console.warn('User information is not available');
-      return;
-    }
     try {
       const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-eggs`, {
-        params: { username: user.username },
+        params: { username: username },
       });
       if (response.status === 200) {
-        const filteredEggs = response.data.eggs.filter((egg: Egg) => egg.step === 0 && egg.id !== user?.currEgg);
-        setEggList(filteredEggs);
+        setEggList(response.data);
       }
     } catch (error) {
       console.error('알 데이터를 가져오는 중 오류가 발생했습니다.', error);
@@ -32,22 +22,16 @@ const EggPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchEggList();
-    }
-  }, [user]);
+    fetchEggList();
+  }, []);
 
   const handleCardClick = async (index: number) => {
-    if (!user) return;
-
     const selectedEgg = eggList[index];
     try {
       await axios.patch(`${import.meta.env.VITE_SERVER_URL}/user/update-curr-egg`, {
-        username: user.username,
+        username: username,
         id: selectedEgg.id,
       });
-      setUser(prev => (prev ? { ...prev, currEgg: selectedEgg.id } : null));
-      localStorage.setItem('user', JSON.stringify({ ...user, currEgg: selectedEgg.id }));
     } catch (error) {
       console.error('선택한 알을 업데이트하는 중 오류가 발생했습니다.', error);
     }
