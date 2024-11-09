@@ -3,6 +3,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import dbConfig from './db.config';
 
 export const TypeormConfig = (config: ConfigType<typeof dbConfig>) => {
+  
   const option: TypeOrmModuleOptions = {
     type: 'postgres',
     url: config.url,
@@ -18,5 +19,7 @@ export const TypeormConfig = (config: ConfigType<typeof dbConfig>) => {
       rejectUnauthorized: false,
     },
   };
+
   return option;
+
 };
