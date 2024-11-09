@@ -2,7 +2,12 @@ import { Layout, Typography, Row, Col, Card } from 'antd';
 import axios from 'axios';
 import { Egg } from '../models/egg';
 import React, { useEffect, useState } from 'react';
-
+const color_images: { [key: number]: string } = {
+  1: '/assets/egg_yellow.png',
+  2: '/assets/egg_orange.png',
+  3: '/assets/egg_blue.png',
+  4: '/assets/egg_white.png',
+};
 const EggPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
 
@@ -63,7 +68,7 @@ const EggPage: React.FC = () => {
             >
               <Card style={{ height: '100%', width: '100%', borderRadius: '10px', overflow: 'hidden', background: 'transparent', boxShadow: 'none', flexShrink: 0 }}>
                 <img
-                  src="/assets/egg.png"
+                  src={color_images[egg.color] || '/assets/egg.png'}
                   alt="Egg"
                   style={{
                     transform: 'scale(1.8) translateY(-33%)',
