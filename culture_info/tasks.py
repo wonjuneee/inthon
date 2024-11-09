@@ -107,6 +107,3 @@ def etl():
         logging.error(f"Error in ETL process: {str(e)}")
         cur.execute("ROLLBACK;")
         raise
-
-if __name__ == "__main__":
-    etl()
