@@ -26,7 +26,7 @@ const PerformancePage = () => {
 
   // useEffect(() => {
   //   axios
-  //     .get(`${process.env.SERVER_URL}/performance/get?eventId=${id}`)
+  //     .get(`${import.meta.env.VITE_SERVER_URL}/performance/get?eventId=${id}`)
   //     .then(res => setPerformance(res.data))
   //     .catch(err => console.log(err));
   // }, []);

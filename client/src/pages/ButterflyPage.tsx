@@ -13,7 +13,7 @@ const ButterflyPage = () => {
 
   // useEffect(() => {
   //   axios
-  //     .get(`${process.env.SERVER_URL}/art/get-total-art?id=${eggId}`)
+  //     .get(`${import.meta.env.VITE_SERVER_URL}/art/get-total-art?id=${eggId}`)
   //     .then(res => setArts(res.data))
   //     .catch(err => console.log(err));
   // }, []);

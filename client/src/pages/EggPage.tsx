@@ -23,7 +23,7 @@ const EggPage: React.FC = () => {
       return;
     }
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-eggs`, {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-eggs`, {
         params: { username: user.username },
       });
       if (response.status === 200) {
@@ -56,7 +56,7 @@ const EggPage: React.FC = () => {
 
     const selectedEgg = eggList[index];
     try {
-      await axios.patch(`${process.env.REACT_APP_API_URL}/user/update-curr-egg`, {
+      await axios.patch(`${import.meta.env.VITE_SERVER_URL}/user/update-curr-egg`, {
         username: user.username,
         id: selectedEgg.id,
       });

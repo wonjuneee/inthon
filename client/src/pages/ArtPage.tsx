@@ -19,7 +19,7 @@ const ArtPage = () => {
 
   // useEffect(() => {
   //   axios
-  //     .get(`${process.env.SERVER_URL}/art/get-art?id=${artId}`)
+  //     .get(`${import.meta.env.VITE_SERVER_URL}/art/get-art?id=${artId}`)
   //     .then(res => setArt(res.data))
   //     .catch(err => console.log(err));
   // }, []);
