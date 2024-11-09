@@ -254,6 +254,8 @@ const ArtPage = () => {
             backgroundImage: `url(${image})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            padding: 0,
           }}
         />
       ) : (

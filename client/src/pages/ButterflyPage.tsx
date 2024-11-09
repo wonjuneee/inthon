@@ -102,7 +102,14 @@ const ButterflyPage = () => {
                   padding: 0,
                 }}
               >
-                <img src={art.imagePath!} style={{ width: '102px', height: '102px' }} />
+                <img
+                  src={art.imagePath!}
+                  style={{
+                    width: '102px',
+                    height: '102px',
+                    borderRadius: '10px', // Applying the round border with 10px radius
+                  }}
+                />
               </button>
             </Col>
           ))}
