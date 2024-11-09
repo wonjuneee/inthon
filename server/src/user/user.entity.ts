@@ -17,7 +17,6 @@ export class User extends CommonEntity {
   @JoinColumn({ name: 'currEgg' })
   currEgg: Egg;
 
-  @OneToMany(() => Egg, (egg) => egg.id)
-  @JoinColumn({ name: 'contains' })
-  contains: Egg[];
+  @OneToMany(() => Egg, (egg) => egg.user)
+  egg: Egg[];
 }

@@ -20,11 +20,6 @@ export class UserService {
 
     if (!user) {
       const egg: Egg = await this.eggService.createEgg();
-      user = this.userRepository.create({
-        username: username,
-        currEgg: egg,
-        contains: [],
-      });
 
       await this.userRepository.save(user);
     }

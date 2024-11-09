@@ -31,17 +31,16 @@ export class Egg extends CommonEntity {
   @Column()
   color: number;
 
-  @OneToOne(() => Art, (art) => art.id)
-  @JoinColumn({ name: 'currArt' })
-  currArt: Art;
-
-  @OneToMany(() => Art, (art) => art.id)
-  @JoinColumn({ name: 'totalArt' })
-  totalArt: Art[];
+  @ManyToOne(() => User, (user) => user.username)
+  user: User;
 
   @OneToOne(() => User, (user) => user.currEgg)
   currEgg: User;
 
-  @ManyToOne(() => User, (user) => user.contains)
-  contains: User[];
+  @OneToOne(() => Art, (art) => art.egg)
+  @JoinColumn({ name: 'art' })
+  currArt: Art;
+
+  @OneToMany(() => Art, (art) => art.egg)
+  art: Art[];
 }
