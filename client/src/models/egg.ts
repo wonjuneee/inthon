@@ -9,7 +9,7 @@
  * @property {string} totalArt - 나비를 키울 때 기록한 Art
  */
 
-export interface Art {
+export interface Egg {
   id: number;
   step: number;
   currAry: number;
@@ -17,7 +17,7 @@ export interface Art {
   totalArt: string;
 }
 
-const enum STEP {
+export const enum STEP {
   egg = 0,
   caterpillar = 1,
   pupa = 2,
