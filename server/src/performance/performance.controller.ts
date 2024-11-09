@@ -21,7 +21,7 @@ export class PerformanceController {
   @Get('get-all')
   async getAll(): Promise<PerformanceGetAllResDto[]> {
     this.logger.log('Get all performance data');
-    return this.performanceService.getAll();
+    return await this.performanceService.getAll();
   }
 
   @Get('get')
@@ -32,6 +32,6 @@ export class PerformanceController {
     const eventId = performanceGetReq.eventId;
     if (!eventId)
       throw new BadRequestException('eventId가 전송되지 않았습니다.');
-    return this.performanceService.get(eventId);
+    return await this.performanceService.get(eventId);
   }
 }
