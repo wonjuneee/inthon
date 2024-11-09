@@ -9,17 +9,11 @@ export class User extends CommonEntity {
   @PrimaryGeneratedColumn()
   username: string;
 
-  @Column()
-  currEgg: number;
-
-  @Column()
-  contains: number[];
-
-  @OneToOne(()=> Egg, egg => egg.id)
-  @JoinColumn()
-  currentEgg: Egg;
+  @OneToOne(() => Egg, (egg) => egg.id)
+  @JoinColumn({ name: 'currName' })
+  currEgg: Egg;
 
   @OneToMany(() => Egg, (egg) => egg.id)
-  @JoinColumn()
-  eggs: Egg;
+  @JoinColumn({ name: 'contains' })
+  contains: Egg[];
 }

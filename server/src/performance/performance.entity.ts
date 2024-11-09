@@ -1,5 +1,6 @@
-import { Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 import { CommonEntity } from '../common/common.entity';
+import { Art } from '../art/art.entity';
 
 export class Performance extends CommonEntity {
   @PrimaryColumn({ type: 'varchar', length: 255 })
@@ -17,7 +18,7 @@ export class Performance extends CommonEntity {
   @Column({ type: 'varchar', length: 31 })
   placeNm: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   poster: string;
 
   @Column({ type: 'varchar', length: 31 })

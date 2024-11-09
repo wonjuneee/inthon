@@ -3,16 +3,15 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  Timestamp,
   OneToMany,
   ManyToOne,
   OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Egg } from 'src/egg/egg.entity';
-import { JoinColumn } from 'typeorm';
-import { Image } from 'src/image/image.entity';
+import { Performance } from '../performance/performance.entity';
 
-@Entity('art')
+@Entity('Art')
 export class Art extends CommonEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,21 +19,15 @@ export class Art extends CommonEntity {
   @Column()
   questionIdx: number;
 
-  @Column()
-  createdAt: Date;
+  @Column({ nullable: true })
+  imagePath: string;
 
-  @Column()
-  updatedAt: Date;
+  @Column({ nullable: true })
+  description: string;
 
   @ManyToOne(() => Egg, (egg) => egg.totalArt)
-  @JoinColumn()
   eggs: Egg;
 
-  @OneToMany(() => Egg, (egg) => egg.currArt)
-  @JoinColumn()
-  currentEgg: Egg;
-
-  @OneToOne(() => Image, (image) => image.id)
-  @JoinColumn()
-  image: Image;
+  @OneToOne(() => Egg, (egg) => egg.currArt)
+  currEgg: Egg;
 }
