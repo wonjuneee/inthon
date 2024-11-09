@@ -14,6 +14,8 @@ import { TypeormConfig } from './config/typeorm.config';
 import { ImagesController } from './image/image.controller';
 import { ImagesModule } from './image/image.module';
 import { ImageService } from './image/image.service';
+import { PerformanceModule } from './performance/performance.module';
+import { PerformanceController } from './performance/performance.controller';
 import dbConfig from './config/db.config';
 
 @Module({
@@ -42,12 +44,14 @@ import dbConfig from './config/db.config';
     UserModule,
     AwsModule,
     ImagesModule,
+    PerformanceModule,
   ],
   controllers: [
     AppController,
     AuthController,
     UserController,
     ImagesController,
+    PerformanceController,
   ],
   providers: [AppService, AuthService, ImageService],
 })
