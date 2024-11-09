@@ -1,40 +1,33 @@
 import { CommonEntity } from 'src/common/common.entity';
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
-  Timestamp,
-  OneToMany,
-  ManyToOne,
+  Column,
   OneToOne,
+  ManyToOne,
 } from 'typeorm';
 import { Egg } from 'src/egg/egg.entity';
-import { JoinColumn } from 'typeorm';
-import { Image } from 'src/image/image.entity';
 
-@Entity('art')
+@Entity('Art')
 export class Art extends CommonEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: [0, 1, 2, 3, 4, 5, 6], // 6: special question
+  })
   questionIdx: number;
 
-  @Column()
-  createdAt: Date;
+  @Column({ nullable: true })
+  imagePath: string;
 
-  @Column()
-  updatedAt: Date;
+  @Column({ nullable: true })
+  description: string;
 
   @ManyToOne(() => Egg, (egg) => egg.totalArt)
-  @JoinColumn()
   eggs: Egg;
 
-  @OneToMany(() => Egg, (egg) => egg.currArt)
-  @JoinColumn()
-  currentEgg: Egg;
-
-  @OneToOne(() => Image, (image) => image.id)
-  @JoinColumn()
-  image: Image;
+  @OneToOne(() => Egg, (egg) => egg.currArt)
+  currEgg: Egg;
 }
