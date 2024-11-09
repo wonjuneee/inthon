@@ -5,16 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 const ButterflyContainerPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
-
   const username = localStorage.getItem('username');
-
-  //   const dummyEggs: Egg[] = [
-  //     { id: 1, step: 3, color: 0xff5733, currArt: null, totalArt: null },
-  //     { id: 2, step: 3, color: 0x33c4ff, currArt: null, totalArt: null },
-  //     { id: 3, step: 3, color: 0x85ff33, currArt: null, totalArt: null },
-  //     { id: 4, step: 3, color: 0xff33f6, currArt: null, totalArt: null },
-  //     { id: 4, step: 2, color: 0xfd33f6, currArt: null, totalArt: null },
-  //   ];
 
   const fetchEggList = async () => {
     try {
