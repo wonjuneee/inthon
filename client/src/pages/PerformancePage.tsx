@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 
 const PerformancePage = () => {
   const performance: Performance = {
-    eventId: 0,
+    eventId: '0',
     prfNm: 'MJ 매직 쇼',
     prfStart: new Date('2024-12-01'),
     prfEnd: new Date('2024-12-31'),
