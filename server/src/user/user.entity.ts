@@ -25,5 +25,4 @@ export class User extends CommonEntity {
   @JoinColumn()
   eggs: Egg;
 
-  
 }
