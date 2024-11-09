@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
+import { AwsModule } from './aws/aws.module';
 import dbConfig from './config/db.config';
 
 @Module({
@@ -35,6 +36,7 @@ import dbConfig from './config/db.config';
     }),
     AuthModule,
     UserModule,
+    AwsModule,
   ],
   controllers: [AppController, AuthController, UserController],
   providers: [AppService, AuthService],
