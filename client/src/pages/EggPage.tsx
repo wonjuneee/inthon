@@ -6,25 +6,50 @@ import { useAuth } from '../components/context/AuthContent';
 
 const EggPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
-  const { username } = useAuth();
+  const { user, isLoggedIn } = useAuth();
+
+  // 알 더미 데이터
+  //   const dummyEggs: Egg[] = [
+  //     { id: 1, step: 0, color: 0xff5733, currArt: null, totalArt: null },
+  //     { id: 2, step: 0, color: 0x33c4ff, currArt: null, totalArt: null },
+  //     { id: 3, step: 0, color: 0x85ff33, currArt: null, totalArt: null },
+  //     { id: 4, step: 0, color: 0xff33f6, currArt: null, totalArt: null },
+  //     { id: 5, step: 1, color: 0x33ff57, currArt: null, totalArt: null }, // step이 1이므로 필터링되지 않음
+  //   ];
 
   const fetchEggList = async () => {
+    if (!user || !user.username) {
+      console.warn('User information is not available');
+      return;
+    }
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-eggs`, {
-        params: { username },
+        params: { username: user.username },
       });
       if (response.status === 200) {
-        const filteredEggs = response.data.eggs.filter((egg: Egg) => egg.step === 0 && egg.currArt === null);
+        const filteredEggs = response.data.eggs.filter((egg: Egg) => egg.step === 0 && egg.id !== user?.currEgg);
         setEggList(filteredEggs);
       }
     } catch (error) {
       console.error('알 데이터를 가져오는 중 오류가 발생했습니다.', error);
     }
+    // 더미 데이터 사용
+    // if (user) {
+    //   // user 정보 로그로 확인
+    //   console.log('User data:', user);
+
+    //   // 더미 알 데이터 필터링
+    //   const filteredEggs = dummyEggs.filter(egg => egg.step === 0 && egg.id !== user.currEgg);
+    //   console.log('Filtered Eggs:', filteredEggs);
+    //   setEggList(filteredEggs);
+    // }
   };
 
   useEffect(() => {
-    fetchEggList();
-  }, [username]);
+    if (isLoggedIn && user) {
+      fetchEggList();
+    }
+  }, [user, isLoggedIn]);
 
   const handleCardClick = (index: number) => {
     alert(`알 ${index + 1}을 선택하셨습니다.`);
