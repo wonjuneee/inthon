@@ -17,6 +17,7 @@ export class Art extends CommonEntity {
   @Column({
     type: 'enum',
     enum: [0, 1, 2, 3, 4, 5, 6], // 6: special question
+    default: 0,
   })
   questionIdx: number;
 
