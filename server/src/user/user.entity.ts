@@ -5,9 +5,7 @@ import { Egg } from 'src/egg/egg.entity';
 import { OneToMany } from 'typeorm';
 
 @Entity('user')
-
 export class User extends CommonEntity {
-
   @PrimaryGeneratedColumn()
   username: string;
 
@@ -21,9 +19,7 @@ export class User extends CommonEntity {
   @JoinColumn()
   currentEgg: Egg;
 
-  @OneToMany(()=> Egg, egg => egg.id)
+  @OneToMany(() => Egg, (egg) => egg.id)
   @JoinColumn()
   eggs: Egg;
-
-  
 }
