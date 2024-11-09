@@ -4,8 +4,8 @@ import axios from 'axios';
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  login: () => void;
-  logout: () => void;
+  username: string | null;
+  login: (username: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -18,6 +18,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [username, setUsername] = useState<string | null>(null);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertType, setAlertType] = useState<'success' | 'error'>();
 
@@ -32,12 +33,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       if (response.status === 200) {
         setIsLoggedIn(true);
+        setUsername(response.data.username);
         setAlertMessage('로그인에 성공했습니다.');
         setAlertType('success');
       }
     } catch (error) {
       console.error('인증 상태 확인 실패:', error);
       setIsLoggedIn(false);
+      setUsername(null);
       setAlertMessage('로그인에 실패했습니다.');
       setAlertType('error');
     }
@@ -47,15 +50,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkAuhtStatus();
   });
 
-  const login = () => checkAuhtStatus();
-  const logout = () => {
-    setIsLoggedIn(false);
-    setAlertMessage('로그아웃 되었습니다.');
+  const login = (username: string) => {
+    setUsername(username);
+    setIsLoggedIn(true);
+    setAlertMessage('로그인에 성공했습니다.');
     setAlertType('success');
   };
+
   //로그인 실패시 alert
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, username, login }}>
       {alertMessage && <Alert message={alertMessage} type={alertType} closable showIcon />}
       {children}
     </AuthContext.Provider>
