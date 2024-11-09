@@ -1,15 +1,31 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { UserRepository } from './user.repository';
-import { LoginReqDto } from './dto/login-req.dto';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import { Egg } from 'src/egg/egg.entity';
 
 @Injectable()
 export class UserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>
+  ) {}
 
-  async login(data: LoginReqDto): Promise<User> {
+  async login(username: string): Promise<User> {
+    let user = await this.userRepository.findOne({
+      where: { username: username },
+    });
 
-    return this.userRepository.login(data);
-    
+    if (!user) {
+      user = this.userRepository.create({
+        username: username,
+        currEgg: new Egg(),
+        contains: [],
+      });
+
+      await this.userRepository.save(user);
+    }
+
+    return user;
   }
 }
