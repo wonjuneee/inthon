@@ -2,13 +2,17 @@ import { Layout, Typography, Row, Col, Card } from 'antd';
 import axios from 'axios';
 import { Egg } from '../models/egg';
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '../components/context/AuthContent';
 
 const EggPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
+  const { username } = useAuth();
 
   const fetchEggList = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-eggs`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-eggs`, {
+        params: { username },
+      });
       if (response.status === 200) {
         const filteredEggs = response.data.eggs.filter((egg: Egg) => egg.step === 0 && egg.currArt === null);
         setEggList(filteredEggs);
@@ -20,7 +24,7 @@ const EggPage: React.FC = () => {
 
   useEffect(() => {
     fetchEggList();
-  }, []);
+  }, [username]);
 
   const handleCardClick = (index: number) => {
     alert(`알 ${index + 1}을 선택하셨습니다.`);
