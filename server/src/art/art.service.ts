@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Art } from './art.entity';
-import { GetTotalArtResDto } from './dtos/art.res.dtos';
 import { EggService } from 'src/egg/egg.service';
+import { GetTotalArtResDto } from './dto/get-total-art.res.dto';
 
 @Injectable()
 export class ArtService {
@@ -12,8 +12,13 @@ export class ArtService {
     private eggService: EggService
   ) {}
 
-  async getTotalArt(id: number): Promise<any> {
+  async getTotalArt(id: number): Promise<GetTotalArtResDto[]> {
     const egg = await this.eggService.getEgg(id);
+    const arts: GetTotalArtResDto[] = await this.artRepository.find({
+      select: ['id', 'imagePath'],
+      where: { egg: egg },
+    });
+    return arts;
   }
 
   async getArt(id: number): Promise<Art> {
