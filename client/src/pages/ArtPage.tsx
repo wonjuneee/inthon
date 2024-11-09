@@ -1,15 +1,38 @@
 import { Layout } from 'antd';
 import { FaCamera } from 'react-icons/fa';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import QuestContainer from '../components/common/QuestContainer';
 import { questions } from '../utils/constants';
+import QuestContainer from '../components/common/QuestContainer';
 import CustomButton from '../components/common/CustomButton';
 import Spacer from '../components/common/Spacer';
+import { Art } from '../models/art';
 
 const ArtPage = () => {
+  // const location = useLocation();
+  // const artId = location.state.id;
+
+  // const [art, setArt] = useState<Art | null>(null);
+  const [description, setDescription] = useState<string>('');
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.SERVER_URL}/art/get-art?id=${artId}`)
+  //     .then(res => setArt(res.data))
+  //     .catch(err => console.log(err));
+  // }, []);
+
+  const art: Art = { id: 0, questionIdx: 0, imagePath: null, description: null, createdAt: null, updatedAt: null };
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
+  };
+
   return (
     <Layout className="layout">
-      <QuestContainer content={questions[0]} />
+      <QuestContainer content={questions[art?.questionIdx!]} />
       <Spacer height={40} />
 
       <p className="title self-start" color="var(--black)">
@@ -40,12 +63,15 @@ const ArtPage = () => {
             fontSize: '14px',
             resize: 'none',
           }}
+          readOnly={art?.description !== null}
+          value={art?.description ?? description}
+          onChange={handleTextChange}
         />
       </div>
       <Spacer height={8} />
 
       <p className="body self-end" color="var(--gray-500)">
-        0/255
+        {description.length}/255
       </p>
       <Spacer height={24} />
 
