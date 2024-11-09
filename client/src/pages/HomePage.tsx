@@ -25,7 +25,7 @@ interface ArtData {
 const HomePage: React.FC = () => {
   const [eggData, setEggData] = useState<EggData | null>(null);
   const [artData, setArtData] = useState<ArtData | null>(null);
-  const { username } = useAuth();
+  const { user, isLoggedIn } = useAuth();
   const { token } = theme.useToken();
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
     async function fetchEggData() {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-current`, {
-          params: { username },
+          params: { user },
         });
         if (response.status === 200) {
           setEggData(response.data.egg);
@@ -44,7 +44,7 @@ const HomePage: React.FC = () => {
       }
     }
     fetchEggData();
-  }, [username]);
+  }, [user, isLoggedIn]);
 
   const imageSrc = eggData ? step_images[eggData.step] : '/assets/egg.png';
   const backgroundImageSrc = eggData && eggData.step === 3 ? '/assets/flower.png' : '/assets/leaf.png';
