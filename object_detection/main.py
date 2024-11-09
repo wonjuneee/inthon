@@ -1,11 +1,15 @@
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
+from dotenv import load_dotenv
 import requests
 
 app = FastAPI()
 
+load_dotenv()
+
 API_URL = "https://api-inference.huggingface.co/models/facebook/detr-resnet-50"
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": f"Bearer {os.getenv('HUGGING_FACE')}"}
 
 class DetectionRequest(BaseModel):
     file: str
