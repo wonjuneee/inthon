@@ -22,5 +22,5 @@ export class Performance extends CommonEntity {
   poster: string;
 
   @Column({ type: 'varchar', length: 31 })
-  genre: string;
+  genreNm: string;
 }
