@@ -1,4 +1,4 @@
-const questions: string[] = [
+export const questions: string[] = [
   '빨강, 주황, 노랑, 초록이 모두 있는 단풍 사진을 찍어보세요.',
   '오늘의 달은 어떤 모양이였나요?',
   '단풍에 맞춰 빨간 옷을 입어보아요!',
