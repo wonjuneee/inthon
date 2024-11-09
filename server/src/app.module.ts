@@ -13,6 +13,8 @@ import { TypeormConfig } from './config/typeorm.config';
 import { PerformanceModule } from './performance/performance.module';
 import { PerformanceController } from './performance/performance.controller';
 import dbConfig from './config/db.config';
+import { ArtModule } from './art/art.module';
+import { EggModule } from './egg/egg.module';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import dbConfig from './config/db.config';
     AuthModule,
     UserModule,
     AwsModule,
+    ArtModule,
+    EggModule,
     PerformanceModule,
   ],
   controllers: [AppController, AuthController],
