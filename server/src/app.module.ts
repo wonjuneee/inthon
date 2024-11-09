@@ -34,12 +34,7 @@ import { AwsService } from './aws/aws.service';
     AwsModule,
     PerformanceModule,
   ],
-  controllers: [
-    AppController,
-    AuthController,
-    UserController,
-    PerformanceController,
-  ],
+  controllers: [AppController, AuthController, UserController],
   providers: [AppService, AuthService],
 })
 export class AppModule {}
