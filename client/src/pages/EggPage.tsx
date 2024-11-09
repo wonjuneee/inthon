@@ -51,8 +51,18 @@ const EggPage: React.FC = () => {
     }
   }, [user, isLoggedIn]);
 
-  const handleCardClick = (index: number) => {
-    alert(`알 ${index + 1}을 선택하셨습니다.`);
+  const handleCardClick = async (index: number) => {
+    if (!user) return;
+
+    const selectedEgg = eggList[index];
+    try {
+      await axios.patch(`${process.env.REACT_APP_API_URL}/user/update-curr-egg`, {
+        username: user.username,
+        id: selectedEgg.id,
+      });
+    } catch (error) {
+      console.error('선택한 알을 업데이트하는 중 오류가 발생했습니다.', error);
+    }
   };
 
   return (
