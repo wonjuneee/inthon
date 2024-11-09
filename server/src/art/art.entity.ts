@@ -16,7 +16,10 @@ export class Art extends CommonEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: [0, 1, 2, 3, 4, 5, 6], // 6: special question
+  })
   questionIdx: number;
 
   @Column({ nullable: true })

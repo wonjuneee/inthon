@@ -16,7 +16,11 @@ export class Egg extends CommonEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: [0, 1, 2, 3],
+    default: 0,
+  })
   step: number;
 
   @Column()
