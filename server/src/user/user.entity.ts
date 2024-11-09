@@ -3,11 +3,9 @@ import { Entity, Column, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
 import { OneToOne } from 'typeorm';
 import { Egg } from 'src/egg/egg.entity';
 import { OneToMany } from 'typeorm';
-import { type } from 'os';
+
 @Entity('user')
-
 export class User extends CommonEntity {
-
   @PrimaryGeneratedColumn()
   username: string;
 
@@ -17,12 +15,11 @@ export class User extends CommonEntity {
   @Column()
   contains: number[];
 
-  @OneToOne(()=> Egg)
+  @OneToOne(()=> Egg, egg => egg.id)
   @JoinColumn()
   currentEgg: Egg;
 
-  @OneToMany(()=> Egg, egg => egg.id)
+  @OneToMany(() => Egg, (egg) => egg.id)
   @JoinColumn()
-  eggs: Egg[];
-
+  eggs: Egg;
 }

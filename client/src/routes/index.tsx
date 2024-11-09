@@ -13,6 +13,7 @@ export function RouteComponent() {
       <Route path="art" element={<ArtPage />} />
       <Route path="performance" element={<PerformancePage />} />
       <Route path="butterfly" element={<ButterflyPage />} />
+      <Route path="egg" element={<EggPage />} />
     </Routes>
   );
 }
