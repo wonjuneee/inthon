@@ -1,14 +1,14 @@
 import { CommonEntity } from 'src/common/common.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-import { ArtEntity } from 'src/art/art.entity';  
+import { Art } from 'src/art/art.entity';  
 import { OneToOne } from 'typeorm';
-import { UserEntity } from 'src/user/user.entity';
+import { User } from 'src/user/user.entity';
 
 
 
 @Entity('Egg')
 
-export class EggEntity extends CommonEntity {
+export class Egg extends CommonEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,20 +24,20 @@ export class EggEntity extends CommonEntity {
   @Column()
   totalArt: number[];
 
-  @OneToMany(()=>ArtEntity, art => art.id)
-  @JoinColumn({name: 'totalArt', referencedColumnName: 'id'})
-  art: ArtEntity;
+  @OneToMany(()=>Art, art => art.id)
+  @JoinColumn()
+  art: Art;
 
-  @ManyToOne(()=>ArtEntity, art => art.id)
-  @JoinColumn({name: 'currArt', referencedColumnName: 'id'})
-  currentArt: ArtEntity;
+  @ManyToOne(()=>Art, art => art.id)
+  @JoinColumn()
+  currentArt: Art;
 
-  @OneToOne(()=>UserEntity, user=>user.currEgg)
-  @JoinColumn({name: 'id', referencedColumnName: 'currEgg'})
-  user: UserEntity;
+  @OneToOne(()=>User, user=>user.currEgg)
+  @JoinColumn()
+  user: User;
 
-  @ManyToOne(()=>UserEntity, user => user.contains)
-  @JoinColumn({name: 'id', referencedColumnName: 'contains'}) 
-  users: UserEntity;
+  @ManyToOne(()=>User, user => user.contains)
+  @JoinColumn() 
+  users: User;
 
 }

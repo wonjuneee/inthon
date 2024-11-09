@@ -1,12 +1,12 @@
 import { CommonEntity } from 'src/common/common.entity';
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
 import { OneToOne } from 'typeorm';
-import { EggEntity } from 'src/egg/egg.entity';
+import { Egg } from 'src/egg/egg.entity';
 import { OneToMany } from 'typeorm';
 import { type } from 'os';
 @Entity('user')
 
-export class UserEntity extends CommonEntity {
+export class User extends CommonEntity {
 
   @PrimaryGeneratedColumn()
   username: string;
@@ -17,12 +17,12 @@ export class UserEntity extends CommonEntity {
   @Column()
   contains: number[];
 
-  @OneToOne(()=> EggEntity)
-  @JoinColumn({name: 'currEgg', referencedColumnName: 'id'})
-  currentEgg: EggEntity;
+  @OneToOne(()=> Egg)
+  @JoinColumn()
+  currentEgg: Egg;
 
-  @OneToMany(()=> EggEntity, egg => egg.id)
-  @JoinColumn({name: 'contains', referencedColumnName: 'id'})
-  eggs: EggEntity[];
+  @OneToMany(()=> Egg, egg => egg.id)
+  @JoinColumn()
+  eggs: Egg[];
 
 }
