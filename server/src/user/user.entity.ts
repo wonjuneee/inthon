@@ -1,7 +1,7 @@
 import { CommonEntity } from 'src/common/common.entity';
 import {
   Entity,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToOne,
   OneToMany,
   JoinColumn,
@@ -10,11 +10,11 @@ import { Egg } from 'src/egg/egg.entity';
 
 @Entity('user')
 export class User extends CommonEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ type: 'varchar', length: 15 })
   username: string;
 
   @OneToOne(() => Egg, (egg) => egg.id)
-  @JoinColumn({ name: 'currName' })
+  @JoinColumn({ name: 'currEgg' })
   currEgg: Egg;
 
   @OneToMany(() => Egg, (egg) => egg.id)
