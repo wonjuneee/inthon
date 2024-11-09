@@ -17,17 +17,6 @@ const PerformanceListPage = () => {
       .catch(err => console.log(err));
   }, []);
 
-  // const performances: Performance[] = [
-  //   { eventId: '8', prfNm: 'MJ 매직 쇼 0', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '9', prfNm: 'MJ 매직 쇼 1', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '10', prfNm: 'MJ 매직 쇼 2', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '11', prfNm: 'MJ 매직 쇼 3', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '12', prfNm: 'MJ 매직 쇼 4', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '13', prfNm: 'MJ 매직 쇼 5', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '14', prfNm: 'MJ 매직 쇼 6', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '15', prfNm: 'MJ 매직 쇼 7', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  // ];
-
   const navigate = useNavigate();
 
   const handlePosterClick = (id: string) => {

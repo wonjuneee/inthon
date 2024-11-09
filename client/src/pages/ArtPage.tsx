@@ -11,23 +11,27 @@ import Spacer from '../components/common/Spacer';
 import { Art } from '../models/art';
 
 const ArtPage = () => {
-  // const location = useLocation();
-  // const artId = location.state.id;
+  const location = useLocation();
+  const artId: number = location.state.id;
 
-  // const [art, setArt] = useState<Art | null>(null);
+  const [art, setArt] = useState<Art | null>(null);
   const [description, setDescription] = useState<string>('');
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${import.meta.env.VITE_SERVER_URL}/art/get-art?id=${artId}`)
-  //     .then(res => setArt(res.data))
-  //     .catch(err => console.log(err));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_SERVER_URL}/art/get-art?id=${artId}`)
+      .then(res => setArt(res.data))
+      .catch(err => console.log(err));
+  }, []);
 
-  const art: Art = { id: 0, questionIdx: 0, imagePath: null, description: null, createdAt: null, updatedAt: null };
+  // const art: Art = { id: 0, questionIdx: 0, imagePath: null, description: null, createdAt: null, updatedAt: null };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
+  };
+
+  const handleSaveClick = () => {
+    console.log('save');
   };
 
   /* 카메라 관련 */
@@ -177,7 +181,7 @@ const ArtPage = () => {
       </p>
       <Spacer height={24} />
 
-      <CustomButton text="저장" />
+      <CustomButton text="저장" onClick={handleSaveClick} />
     </Layout>
   );
 };

@@ -6,7 +6,7 @@ import Spacer from '../components/common/Spacer';
 import CustomButton from '../components/common/CustomButton';
 import { Performance } from '../models/performance';
 import { formatDate } from '../utils/utils';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const PerformancePage = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,6 +20,12 @@ const PerformancePage = () => {
       .catch(err => console.log(err));
   }, []);
 
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate(`/art`);
+  };
+
   return (
     <Layout className="layout">
       <img src={performance?.poster} style={{ width: '354px', height: 'auto' }} />
@@ -29,14 +35,14 @@ const PerformancePage = () => {
       </p>
       <Spacer height={8} />
       <p className="subtitle self-start" color="var(--black)">
-        {/* 일시: {formatDate(performance?.prfStart!)} ~ {formatDate(performance?.prfEnd!)} */}
+        일시: {formatDate(performance?.prfStart)} ~ {formatDate(performance?.prfEnd)}
       </p>
       <Spacer height={8} />
       <p className="subtitle self-start" color="var(--black)">
         장소: {performance?.placeNm}
       </p>
       <Spacer height={24} />
-      {/* <CustomButton text="기록하기" /> */}
+      <CustomButton text="기록하기" onClick={handleButtonClick} />
     </Layout>
   );
 };

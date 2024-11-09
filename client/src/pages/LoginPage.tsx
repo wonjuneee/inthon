@@ -15,12 +15,11 @@ const LoginPage: React.FC = () => {
   async function handleLogin() {
     try {
       // post user/login
-      const response = await axios.post(`http://15.164.244.155:8185/user/login`, inputs, {
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/user/login`, inputs, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response);
       if (response.status === 201) {
         // create
         navigate('/');
