@@ -5,31 +5,22 @@ import React, { useEffect, useState } from 'react';
 
 const ButterflyContainerPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
+  const username = localStorage.getItem('username');
+
+  const fetchEggList = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-butterflies`, {
+        params: { username: username },
+      });
+      if (response.status === 200) {
+        setEggList(response.data);
+      }
+    } catch (error) {
+      console.error('알 데이터를 가져오는 중 오류가 발생했습니다.', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchEggList = async () => {
-      const storedUser = localStorage.getItem('user');
-      if (!storedUser) {
-        console.warn('User information is not available');
-        return;
-      }
-
-      const user = JSON.parse(storedUser);
-
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-butterflies`, {
-          params: { username: user.username },
-        });
-        if (response.status === 200) {
-          // step이 3인 나비만 필터링
-          const filteredEggs = response.data.eggs.filter((egg: Egg) => egg.step === 3);
-          setEggList(filteredEggs);
-        }
-      } catch (error) {
-        console.error('알 데이터를 가져오는 중 오류가 발생했습니다.', error);
-      }
-    };
-
     fetchEggList();
   }, []);
 

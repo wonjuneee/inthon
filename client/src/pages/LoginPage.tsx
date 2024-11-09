@@ -21,12 +21,7 @@ const LoginPage: React.FC = () => {
         },
       });
       if (response.status === 201) {
-        const user = {
-          username: response.data.username,
-          currEgg: response.data.currEgg,
-          contains: response.data.contains,
-        };
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('username', response.data.username);
         navigate('/');
       }
     } catch (e) {

@@ -1,6 +1,5 @@
 import { Layout, Row, Col } from 'antd';
 
-import poster from '../assets/poster.png';
 import Spacer from '../components/common/Spacer';
 import { Performance } from '../models/performance';
 import { useNavigate } from 'react-router-dom';
@@ -37,7 +36,7 @@ const PerformanceListPage = () => {
             <button onClick={() => handlePosterClick(performance.eventId)}>
               <img src={performance.poster} style={{ width: '160px', height: '231px', objectFit: 'contain' }} />
               <Spacer height={16} />
-              <p className="subtitle" color="var(--black)">
+              <p className="subtitle" color="var(--black)" style={{ textAlign: 'center', margin: 'auto', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '8ch' }}>
                 {performance.prfNm}
               </p>
             </button>

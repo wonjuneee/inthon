@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
 import { FaCamera, FaCircle } from 'react-icons/fa';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 
 import { questions } from '../utils/constants';
@@ -12,7 +12,7 @@ import { Art } from '../models/art';
 
 const ArtPage = () => {
   const location = useLocation();
-  const artId: number = location.state.id;
+  const artId: number = location.state.artId;
 
   const [art, setArt] = useState<Art | null>(null);
   const [description, setDescription] = useState<string>('');
@@ -30,8 +30,41 @@ const ArtPage = () => {
     setDescription(e.target.value);
   };
 
-  const handleSaveClick = () => {
-    console.log('save');
+  const handleSaveClick = async () => {
+    if (!image) return;
+
+    const byteString = atob(image.split(',')[1]);
+    const mimeString = image.split(',')[0].split(':')[1].split(';')[0];
+
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uintArray = new Uint8Array(arrayBuffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      uintArray[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([arrayBuffer], { type: mimeString });
+    const file = new File([blob], 'image.png', { type: mimeString });
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const navigate = useNavigate();
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/art/upload`,
+        { id: artId, image: formData, description: description },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+      if (response.status === 201) {
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
   };
 
   /* 카메라 관련 */
@@ -82,7 +115,7 @@ const ArtPage = () => {
     // 3. canvas 를 Data URL로 변경
     const dataUrl = canvas.toDataURL('image/png');
 
-    // 4. Image 다운로드
+    // 4. Image 저장
     setImage(dataUrl);
 
     stopCamera();
