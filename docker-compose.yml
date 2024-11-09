@@ -6,12 +6,12 @@ networks:
 services:
   object_detection:
     image: object
-    env_file:
-      - .env
     build:
       context: ./object_detection  # object_detection 폴더로 설정
       dockerfile: Dockerfile  # object_detection의 Dockerfile 사용
     container_name: object-detection
+    env_file:
+      - ./object_detection/.env
     ports:
       - "8000:8000"
     networks:
@@ -21,12 +21,12 @@ services:
 
   culture_info:
     image: culture_info
-    env_file:
-      - .env
     build:
       context: ./culture_info  # culture_info 폴더로 설정
       dockerfile: Dockerfile  # culture_info의 Dockerfile 사용
     container_name: culture-info
+    env_file:
+      - ./culture_info/.env
     environment:
       - ENVIRONMENT=production
     networks:
@@ -34,11 +34,11 @@ services:
 
   nestjs:
     image: nest-back
-    env_file:
-      - .env.dev
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: nest
+    env_file:
+      - ./server/.env.dev
+    container_name: nest-backend
     networks:
       - inthon-bridge
