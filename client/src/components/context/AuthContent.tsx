@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children, isTestMode
   const checkAuhtStatus = async () => {
     if (isTestMode) return;
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/user/status`, {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/status`, {
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json',

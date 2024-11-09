@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
   async function handleLogin() {
     try {
       // post user/login
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/user/login`, inputs, {
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/user/login`, inputs, {
         headers: {
           'Content-Type': 'application/json',
         },

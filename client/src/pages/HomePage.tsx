@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
     async function fetchEggData() {
       if (!user || !isLoggedIn) return;
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-current`, {
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-current`, {
           params: { username: user.username },
         });
         if (response.status === 200) {
