@@ -7,13 +7,9 @@ import CustomButton from '../components/common/CustomButton';
 const PerformancePage = () => {
   return (
     <Layout className="layout">
-      <p className="title self-start" color="var(--black)">
-        MJ 매직쇼를 다녀오세요!
-      </p>
-      <Spacer height={24} />
       <img src={poster} style={{ width: '354px', height: 'auto' }} />
-      <Spacer height={24} />
-      <p className="subtitle self-start" color="var(--black)">
+      <Spacer height={40} />
+      <p className="title self-start" color="var(--black)">
         MJ 매직쇼
       </p>
       <Spacer height={8} />
@@ -24,7 +20,7 @@ const PerformancePage = () => {
       <p className="subtitle self-start" color="var(--black)">
         장소: 송파어린이문화회관 아이소리홀
       </p>
-      <Spacer height={40} />
+      <Spacer height={24} />
       <CustomButton text="기록하기" />
     </Layout>
   );

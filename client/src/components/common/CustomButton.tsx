@@ -2,7 +2,7 @@ import { Button } from 'antd';
 
 interface CustomButtonProps {
   text: string;
-  // onClick: () => Promise<void> | (() => void);
+  onClick: () => Promise<void> | (() => void);
 }
 
 export default function CustomButton({ text }: CustomButtonProps) {

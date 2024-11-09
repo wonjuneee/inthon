@@ -11,9 +11,6 @@ import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 import { AwsModule } from './aws/aws.module';
 import { TypeormConfig } from './config/typeorm.config';
-import { ImagesController } from './image/image.controller';
-import { ImagesModule } from './image/image.module';
-import { ImageService } from './image/image.service';
 import { PerformanceModule } from './performance/performance.module';
 import { PerformanceController } from './performance/performance.controller';
 import dbConfig from './config/db.config';
@@ -35,14 +32,12 @@ import { AwsService } from './aws/aws.service';
     AuthModule,
     UserModule,
     AwsModule,
-    ImagesModule,
     PerformanceModule,
   ],
   controllers: [
     AppController,
     AuthController,
     UserController,
-    ImagesController,
     PerformanceController,
   ],
   providers: [AppService, AuthService],
