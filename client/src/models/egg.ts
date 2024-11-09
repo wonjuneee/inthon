@@ -3,18 +3,18 @@
  * 나비!
  * @interface Egg
  * @property {number} id - 알의 id
- * @property {number | undefined} step - 현제 단계
+ * @property {number | null} step - 현제 단계
  * @property {number} color - 나비 색
- * @property {number | undefined} currArt - 현제 활성화된 Art
- * @property {string | undefined} totalArt - 나비를 키울 때 기록한 Art
+ * @property {number | null} currArt - 현제 활성화된 Art
+ * @property {string | null} totalArt - 나비를 키울 때 기록한 Art
  */
 
 export interface Egg {
   id: number;
-  step: number | undefined;
+  step: number | null;
   color: number;
-  currArt: number | undefined;
-  totalArt: string | undefined;
+  currArt: number | null;
+  totalArt: string | null;
 }
 
 export const enum STEP {
