@@ -9,5 +9,6 @@ import { EggModule } from 'src/egg/egg.module';
   imports: [TypeOrmModule.forFeature([User]), EggModule],
   providers: [UserService],
   controllers: [UserController],
+  exports: [UserService],
 })
 export class UserModule {}
