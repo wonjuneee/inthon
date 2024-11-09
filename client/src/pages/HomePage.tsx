@@ -1,7 +1,12 @@
 import React from 'react';
-import { Layout, theme, Image, Button } from 'antd';
+import { Layout, theme, Button } from 'antd';
 import QuestContainer from '../components/common/QuestContainer';
 import { STEP } from '../models/egg';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from '../components/context/AuthContent';
+import { questions } from '../utils/constants';
+import { useNavigate } from 'react-router-dom';
 
 const step_images = {
   [STEP.egg]: '/assets/egg.png',
@@ -10,25 +15,56 @@ const step_images = {
   [STEP.butterfly]: '/assets/butterfly.png',
 };
 
-interface HomepageProps {
+interface EggData {
   step: STEP;
 }
-const HomePage: React.FC<HomepageProps> = ({ step }) => {
-  const imageSrc = step_images[step as 0 | 1 | 2 | 3] || '/assets/egg.png';
+interface ArtData {
+  questionIdx: number;
+}
+
+const HomePage: React.FC = () => {
+  const [eggData, setEggData] = useState<EggData | null>(null);
+  const [artData, setArtData] = useState<ArtData | null>(null);
+  const { username } = useAuth();
   const { token } = theme.useToken();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchEggData() {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-current`, {
+          params: { username },
+        });
+        if (response.status === 200) {
+          setEggData(response.data.egg);
+          setArtData(response.data.art);
+        }
+      } catch (error) {
+        console.error('데이터 정보를 가져오는데 오류가 생겼습니다.', error);
+      }
+    }
+    fetchEggData();
+  }, [username]);
+
+  const imageSrc = eggData ? step_images[eggData.step] : '/assets/egg.png';
+  const backgroundImageSrc = eggData && eggData.step === 3 ? '/assets/flower.png' : '/assets/leaf.png';
+  const questContent = artData ? questions[artData.questionIdx] : '질문 데이터 불러오는 중...';
 
   const handleQuestClick = () => {
     alert('QuestContainer 버튼이 클릭되었습니다!');
   };
+  const handleButtonClick = () => {
+    navigate('/egg');
+  };
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
       <Layout style={{ width: 402, height: 874, background: token.colorBgBase, position: 'relative', overflow: 'hidden' }}>
-        <img src={'/assets/leaf.png'} className="bg-img" />
-        <img src={'/assets/egg.png'} className="bg-img" />
+        <img src={backgroundImageSrc} className="bg-img" />
+        <img src={imageSrc} className="bg-img" />
         <div className="flex justify-center items-center relative z-10">
           <div className="p-16">
             <button onClick={handleQuestClick} className="flex justify-center items-center">
-              <QuestContainer content="빨강, 주황, 노랑, 초록이 모두 있는 단풍 사진을 찍어보세요." />
+              <QuestContainer content={questContent} />
             </button>
           </div>
         </div>
@@ -43,6 +79,7 @@ const HomePage: React.FC<HomepageProps> = ({ step }) => {
             right: '24px',
             backgroundColor: '#F9F9F9',
           }}
+          onClick={handleButtonClick}
         >
           +
         </Button>
