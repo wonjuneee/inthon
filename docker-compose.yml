@@ -9,7 +9,7 @@ services:
     build:
       context: ./object_detection  # object_detection 폴더로 설정
       dockerfile: Dockerfile  # object_detection의 Dockerfile 사용
-    container_name: object_detection
+    container_name: object-detection
     ports:
       - "8000:8000"
     networks:
@@ -22,7 +22,7 @@ services:
     build:
       context: ./culture_info  # culture_info 폴더로 설정
       dockerfile: Dockerfile  # culture_info의 Dockerfile 사용
-    container_name: culture_info
+    container_name: culture-info
     environment:
       - ENVIRONMENT=production
     networks:
