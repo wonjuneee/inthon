@@ -27,3 +27,12 @@ services:
       - ENVIRONMENT=production
     networks:
       - inthon-bridge
+
+  nestjs:
+    image: nest_backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: nest-backend
+    networks:
+      - inthon-bridge
