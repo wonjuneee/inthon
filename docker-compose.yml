@@ -1,0 +1,28 @@
+networks:
+  inthon-bridge:
+    driver: bridge
+
+services:
+  object_detection:
+    image: object
+    build:
+      context: ./object_detection  # object_detection 폴더로 설정
+      dockerfile: Dockerfile  # object_detection의 Dockerfile 사용
+    container_name: object_detection
+    ports:
+      - "8000:8000"
+    networks:
+      - inthon-bridge
+    # environment:
+    #   - NESTJS_URL=http://nestjs:3000
+
+  culture_info:
+    image: culture_info
+    build:
+      context: ./culture_info  # culture_info 폴더로 설정
+      dockerfile: Dockerfile  # culture_info의 Dockerfile 사용
+    container_name: culture_info
+    environment:
+      - ENVIRONMENT=production
+    networks:
+      - inthon-bridge
