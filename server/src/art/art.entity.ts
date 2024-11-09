@@ -1,5 +1,12 @@
 import { CommonEntity } from 'src/common/common.entity';
-import { Entity, Column, PrimaryGeneratedColumn, Timestamp, OneToMany, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Timestamp,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 import { Egg } from 'src/egg/egg.entity';
 import { JoinColumn } from 'typeorm';
 
@@ -17,11 +24,11 @@ export class Art extends CommonEntity {
   @Column()
   updatedAt: Date;
 
-  @ManyToOne(()=>Egg, egg => egg.totalArt)
+  @ManyToOne(() => Egg, (egg) => egg.totalArt)
   @JoinColumn()
   eggs: Egg;
 
-  @OneToMany(()=>Egg, egg => egg.currArt)
+  @OneToMany(() => Egg, (egg) => egg.currArt)
   @JoinColumn()
   currentEgg: Egg;
 }
