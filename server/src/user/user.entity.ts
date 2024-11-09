@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
 import { OneToOne } from 'typeorm';
 import { Egg } from 'src/egg/egg.entity';
 import { OneToMany } from 'typeorm';
-import { type } from 'os';
+
 @Entity('user')
 
 export class User extends CommonEntity {
@@ -25,4 +25,5 @@ export class User extends CommonEntity {
   @JoinColumn()
   eggs: Egg;
 
+  
 }
