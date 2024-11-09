@@ -1,18 +1,36 @@
-import { Get, Body, Param, Controller, Logger, BadRequestException} from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Logger,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { EggService } from './egg.service';
 import { GetButterfliesResDto } from './dto/get-butterflies-req.dto';
+import { GetEggsResDto } from './dto/get-eggs-res.dto';
 
 @Controller('egg')
 export class EggController {
-    private readonly logger = new Logger(EggController.name);
-    constructor(private eggService: EggService) {}
+  constructor(private eggService: EggService) {}
 
-    @Get('get-butterflies/:username')
-    async getButterflies(@Param('username') username:string): Promise<GetButterfliesResDto> {
-        this.logger.log('Get butterflies data');
-        if (!username) throw new BadRequestException('username이 전송되지 않았습니다.');
-        const butterflies = await this.eggService.getButterflies(username);
-        return {eggs : butterflies};
-    }
+  private readonly logger: Logger = new Logger(EggController.name);
+
+  @Get('get-eggs/:username')
+  async getEggs(@Param('username') username: string): Promise<GetEggsResDto[]> {
+    if (username === undefined)
+      throw new BadRequestException('username이 전송되지 않았습니다.');
+    return await this.eggService.getEggs(username);
+  }
+
+  @Get('get-butterflies/:username')
+  async getButterflies(
+    @Param('username') username: string
+  ): Promise<GetButterfliesResDto> {
+    this.logger.log('Get butterflies data');
+    if (!username)
+      throw new BadRequestException('username이 전송되지 않았습니다.');
+    const butterflies = await this.eggService.getButterflies(username);
+    return { eggs: butterflies };
+  }
 }
-
