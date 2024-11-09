@@ -7,7 +7,7 @@ import CustomButton from '../components/common/CustomButton';
 
 const LoginPage: React.FC = () => {
   return (
-    <Layout className="relative flex flex-col items-center justify-center" style={{ width: '402px', height: '874px', margin: 'auto', borderRadius: '8px', overflow: 'hidden' }}>
+    <Layout className="relative flex flex-col items-center justify-center" style={{ width: '402px', height: '874px', margin: 'auto', overflow: 'hidden' }}>
       <img src={'/assets/butterfly.png'} className="bg-img" />
       <div className="relative z-10 flex flex-col items-center " style={{ marginTop: '-350px' }}>
         <Typography.Title level={4} className="mb-6"></Typography.Title>
