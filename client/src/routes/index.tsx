@@ -14,7 +14,7 @@ export function RouteComponent() {
       <Route path="login" element={<LoginPage />} />
       <Route path="art" element={<ArtPage />} />
       <Route path="performance-list" element={<PerformanceListPage />} />
-      <Route path="performance" element={<PerformancePage />} />
+      <Route path="performance/:id" element={<PerformancePage />} />
       <Route path="butterfly" element={<ButterflyPage />} />
       <Route path="egg" element={<EggPage />} />
     </Routes>
