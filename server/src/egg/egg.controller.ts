@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { EggService } from './egg.service';
 import { GetButterfliesResDto } from './dto/get-butterflies-req.dto';
+import { GetEggsResDto } from './dto/get-eggs-res.dto';
 
 @Controller('egg')
 export class EggController {
@@ -16,7 +17,7 @@ export class EggController {
   private readonly logger: Logger = new Logger(EggController.name);
 
   @Get('get-eggs/:username')
-  async getEggs(@Param('username') username: string) {
+  async getEggs(@Param('username') username: string): Promise<GetEggsResDto[]> {
     if (username === undefined)
       throw new BadRequestException('username이 전송되지 않았습니다.');
     return await this.eggService.getEggs(username);

@@ -3,9 +3,9 @@ import { Repository } from 'typeorm';
 import { Egg } from './egg.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from 'src/user/user.service';
-import { GetEggsResDto } from './dtos/egg.res.dtos';
 import { GetButterfliesResDto } from './dto/get-butterflies-req.dto';
 import { ButterflyDto } from './dto/get-butterflies-req.dto';
+import { GetEggsResDto } from './dto/get-eggs-res.dto';
 
 @Injectable()
 export class EggService {
@@ -28,8 +28,15 @@ export class EggService {
     return egg;
   }
 
-  async getEggs(username: string): Promise<any> {
+  async getEggs(username: string): Promise<GetEggsResDto[]> {
     const user = await this.userService.getUser(username);
+    const currEgg = user.currEgg;
+    const eggs: GetEggsResDto[] = await this.eggRepository.find({
+      select: ['id', 'color'],
+      where: { user: user, step: 0, currEgg: !currEgg } as any,
+    });
+
+    return eggs;
   }
 
   async getButterflies(username: string): Promise<ButterflyDto[]> {
