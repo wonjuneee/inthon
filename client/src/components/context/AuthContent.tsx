@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 import { Alert } from 'antd';
 import axios from 'axios';
 import { User } from '../../models/user';
+import { useLocation } from 'react-router-dom';
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -15,19 +16,19 @@ export const useAuth = () => useContext(AuthContext) as AuthContextType;
 
 interface AuthProviderProps {
   children: ReactNode;
-  isTestMode?: boolean;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children, isTestMode = false }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(isTestMode);
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   //테스트 모드에 따른 더미 데이터
-  const [user, setUser] = useState<User | null>(isTestMode ? { username: 'testUser', currEgg: 1, contains: [1, 2, 3, 4] } : null);
+  const [user, setUser] = useState<User | null>(null);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertType, setAlertType] = useState<'success' | 'error'>();
+  const location = useLocation();
 
   // 로그인 상태 확인
-  const checkAuhtStatus = async () => {
-    if (isTestMode) return;
+  const checkAuthStatus = async () => {
+    if (location.pathname === '/login') return;
     try {
       const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/status`, {
         withCredentials: true,
@@ -51,8 +52,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children, isTestMode
   };
 
   useEffect(() => {
-    checkAuhtStatus();
-  });
+    checkAuthStatus();
+  }, []);
 
   const login = (username: string) => {
     setUser({ username, currEgg: 1, contains: [1, 2, 3, 4] });

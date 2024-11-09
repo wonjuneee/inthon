@@ -43,10 +43,11 @@ const HomePage: React.FC = () => {
 
   const imageSrc = eggData?.step !== undefined && eggData?.step !== null ? step_images[eggData.step as STEP] : '/assets/egg.png';
   const backgroundImageSrc = eggData?.step === STEP.butterfly ? '/assets/flower.png' : '/assets/leaf.png';
-  const questContent = artData ? questions[artData.questionIdx] : '질문 데이터 불러오는 중...';
+  const questContent = artData && artData.questionIdx != null ? questions[artData.questionIdx] : '질문 데이터 불러오는 중...';
 
   const handleQuestClick = () => {
     alert('QuestContainer 버튼이 클릭되었습니다!');
+    navigate('/art');
   };
   const handleImageClick = () => {
     if (eggData?.step === STEP.butterfly) {

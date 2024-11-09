@@ -6,11 +6,11 @@ import './styles/tailwind.css';
 
 function App() {
   return (
-    <AuthProvider isTestMode={true}>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <RouteComponent />
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
