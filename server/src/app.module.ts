@@ -11,6 +11,9 @@ import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 import { AwsModule } from './aws/aws.module';
 import { TypeormConfig } from './config/typeorm.config';
+import { ImagesController } from './image/image.controller';
+import { ImagesModule } from './image/image.module';
+import { ImageService } from './image/image.service';
 import dbConfig from './config/db.config';
 
 @Module({
@@ -38,8 +41,14 @@ import dbConfig from './config/db.config';
     AuthModule,
     UserModule,
     AwsModule,
+    ImagesModule,
   ],
-  controllers: [AppController, AuthController, UserController],
-  providers: [AppService, AuthService],
+  controllers: [
+    AppController,
+    AuthController,
+    UserController,
+    ImagesController,
+  ],
+  providers: [AppService, AuthService, ImageService],
 })
 export class AppModule {}
