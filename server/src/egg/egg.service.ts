@@ -3,9 +3,9 @@ import { Repository } from 'typeorm';
 import { Egg } from './egg.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from 'src/user/user.service';
-import { GetButterfliesResDto } from './dto/get-butterflies-req.dto';
 import { ButterflyDto } from './dto/get-butterflies-req.dto';
 import { GetEggsResDto } from './dto/get-eggs-res.dto';
+import { CurrentArtDto, CurrentEggDto } from './dto/get-current-eggs-req.dto';
 
 @Injectable()
 export class EggService {
@@ -49,5 +49,29 @@ export class EggService {
     return eggs.map((egg) => {
       return { id: egg.id, color: egg.color };
     });
+  }
+
+  async getCurrentEggs(
+    username: string
+  ): Promise<{ egg: CurrentEggDto[]; art: CurrentArtDto[] }> {
+    const user = await this.userService.getUser(username);
+    const eggs = await this.eggRepository.find({
+      where: { user: user } as any,
+    });
+
+    const eggDtos: CurrentEggDto[] = eggs.map((egg) => ({
+      id: egg.id,
+      step: egg.step,
+      color: egg.color,
+    }));
+
+    const artDtos: CurrentArtDto[] = eggs
+      .filter((egg) => egg.currArt) // currArt가 존재하는 경우에만
+      .map((egg) => ({
+        id: egg.currArt.id,
+        questionIdx: egg.currArt.questionIdx,
+      }));
+
+    return { egg: eggDtos, art: artDtos };
   }
 }

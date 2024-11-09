@@ -18,6 +18,7 @@ export class Art extends CommonEntity {
 
   @Column({
     type: 'int',
+    default: 0,
   })
   questionIdx: number;
 
