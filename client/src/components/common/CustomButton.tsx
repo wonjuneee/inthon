@@ -17,7 +17,9 @@ export default function CustomButton({ text }: CustomButtonProps) {
         boxShadow: 'var(--shadow)',
       }}
     >
-      {text}
+      <span className="subtitle" style={{ color: 'white' }}>
+        {text}
+      </span>
     </Button>
   );
 }
