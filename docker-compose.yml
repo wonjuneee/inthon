@@ -39,6 +39,8 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./server/.env.dev
+    ports:
+      - "8501:8501"
     container_name: nest-backend
     networks:
       - inthon-bridge

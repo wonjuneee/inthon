@@ -5,6 +5,7 @@ import {
   Column,
   OneToOne,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { Egg } from 'src/egg/egg.entity';
 
@@ -25,8 +26,8 @@ export class Art extends CommonEntity {
   @Column({ nullable: true })
   description: string;
 
-  @ManyToOne(() => Egg, (egg) => egg.totalArt)
-  eggs: Egg;
+  @ManyToOne(() => Egg, (egg) => egg.art)
+  egg: Egg;
 
   @OneToOne(() => Egg, (egg) => egg.currArt)
   currEgg: Egg;

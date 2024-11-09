@@ -1,6 +1,5 @@
 import { Layout, Row, Col } from 'antd';
 
-import poster from '../assets/poster.png';
 import Spacer from '../components/common/Spacer';
 import { Performance } from '../models/performance';
 import { useNavigate } from 'react-router-dom';
@@ -13,25 +12,13 @@ const PerformanceListPage = () => {
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_SERVER_URL}/performance/get-all`, { headers: { 'Content-Type': 'application/json' } })
-      .then(res => console.log(res))
+      .then(res => setPerformances(res.data))
       .catch(err => console.log(err));
   }, []);
-
-  // const performances: Performance[] = [
-  //   { eventId: '8', prfNm: 'MJ 매직 쇼 0', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '9', prfNm: 'MJ 매직 쇼 1', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '10', prfNm: 'MJ 매직 쇼 2', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '11', prfNm: 'MJ 매직 쇼 3', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '12', prfNm: 'MJ 매직 쇼 4', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '13', prfNm: 'MJ 매직 쇼 5', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '14', prfNm: 'MJ 매직 쇼 6', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  //   { eventId: '15', prfNm: 'MJ 매직 쇼 7', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
-  // ];
 
   const navigate = useNavigate();
 
   const handlePosterClick = (id: string) => {
-    alert(`공연 ${id}을 선택하셨습니다.`);
     navigate(`/performance/${id}`);
   };
 
@@ -49,7 +36,7 @@ const PerformanceListPage = () => {
             <button onClick={() => handlePosterClick(performance.eventId)}>
               <img src={performance.poster} style={{ width: '160px', height: '231px', objectFit: 'contain' }} />
               <Spacer height={16} />
-              <p className="subtitle" color="var(--black)">
+              <p className="subtitle" color="var(--black)" style={{ textAlign: 'center', margin: 'auto', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '8ch' }}>
                 {performance.prfNm}
               </p>
             </button>

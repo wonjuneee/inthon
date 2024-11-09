@@ -1,11 +1,10 @@
 import React from 'react';
-import { Layout, theme, Button } from 'antd';
+import { Layout, Button } from 'antd';
 import QuestContainer from '../components/common/QuestContainer';
 import { STEP, Egg } from '../models/egg';
 import { Art } from '../models/art';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from '../components/context/AuthContent';
 import { questions } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,16 +18,15 @@ const step_images: Record<STEP, string> = {
 const HomePage: React.FC = () => {
   const [eggData, setEggData] = useState<Egg | null>(null);
   const [artData, setArtData] = useState<Art | null>(null);
-  const { user, isLoggedIn } = useAuth();
-  const { token } = theme.useToken();
   const navigate = useNavigate();
 
   useEffect(() => {
+    const username = localStorage.getItem('username');
+
     async function fetchEggData() {
-      if (!user || !isLoggedIn) return;
       try {
         const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-current`, {
-          params: { username: user.username },
+          params: { username: username },
         });
         if (response.status === 200) {
           setEggData(response.data.egg);
@@ -38,21 +36,39 @@ const HomePage: React.FC = () => {
         console.error('데이터 정보를 가져오는데 오류가 생겼습니다.', error);
       }
     }
+
     fetchEggData();
-  }, [user, isLoggedIn]);
+    // const egg: Egg = {
+    //   id: 0,
+    //   step: 3,
+    //   color: 0,
+    //   currArt: 0,
+    //   totalArt: null,
+    // };
+    // const art: Art = {
+    //   id: 0,
+    //   questionIdx: 2,
+    //   imagePath: null,
+    //   description: null,
+    //   createdAt: null,
+    //   updatedAt: null,
+    // };
+
+    // setEggData(egg);
+    // setArtData(art);
+  }, []);
 
   const imageSrc = eggData?.step !== undefined && eggData?.step !== null ? step_images[eggData.step as STEP] : '/assets/egg.png';
   const backgroundImageSrc = eggData?.step === STEP.butterfly ? '/assets/flower.png' : '/assets/leaf.png';
-  const questContent = artData ? questions[artData.questionIdx] : '질문 데이터 불러오는 중...';
+  const questContent = artData && artData.questionIdx != null ? questions[artData.questionIdx] : '질문 데이터 불러오는 중...';
 
   const handleQuestClick = () => {
-    alert('QuestContainer 버튼이 클릭되었습니다!');
+    navigate('/art', { state: { artId: artData?.id } });
   };
+
   const handleImageClick = () => {
     if (eggData?.step === STEP.butterfly) {
-      navigate('/butterfly');
-    } else {
-      alert('이동은 나비 단계에서만 가능합니다.');
+      navigate('/butterfly', { state: { eggId: eggData.id } });
     }
   };
 
@@ -62,11 +78,12 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
-      <Layout style={{ width: 402, height: 874, background: token.colorBgBase, position: 'relative', overflow: 'hidden' }}>
+      <Layout style={{ width: 402, height: 874, background: 'var(--secondary)', position: 'relative', overflow: 'hidden' }}>
         <img src={backgroundImageSrc} className="bg-img" />
         <img src={imageSrc} className="bg-img" />
         <button
           onClick={handleImageClick}
+          disabled={eggData?.step !== STEP.butterfly}
           style={{
             position: 'absolute',
             top: 0,
@@ -95,11 +112,21 @@ const HomePage: React.FC = () => {
             height: '60px',
             bottom: '570px',
             right: '24px',
-            backgroundColor: '#F9F9F9',
+            backgroundColor: 'transparent',
           }}
           onClick={handleButtonClick}
         >
-          +
+          <img
+            src="/assets/egg.png"
+            style={{
+              transform: 'scale(1.8) translateY(-17%)',
+              position: 'relative',
+              width: '60px', // 이미지 확대
+              height: 'auto',
+              objectFit: 'cover',
+              objectPosition: 'center',
+            }}
+          />
         </Button>
       </Layout>
     </div>

@@ -12,16 +12,21 @@ export class ArtService {
     private eggService: EggService
   ) {}
 
-  async getTotalArt(id: number): Promise<GetTotalArtResDto[]> {
+  async getTotalArt(id: number): Promise<any> {
     const egg = await this.eggService.getEgg(id);
-    const arts: Array<Art> = egg.totalArt;
-    if (arts === undefined) return [];
-    const getToTalArtResDto: GetTotalArtResDto[] = arts.map((art) => {
-      return {
-        id: art.id,
-        imagePath: art.imagePath,
-      };
+  }
+
+  async getArt(id: number): Promise<Art> {
+    return this.artRepository.findOne({
+      select: [
+        'id',
+        'questionIdx',
+        'imagePath',
+        'description',
+        'createdAt',
+        'updatedAt',
+      ],
+      where: { id },
     });
-    return getToTalArtResDto;
   }
 }

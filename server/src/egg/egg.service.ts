@@ -4,6 +4,8 @@ import { Egg } from './egg.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from 'src/user/user.service';
 import { GetEggsResDto } from './dtos/egg.res.dtos';
+import { GetButterfliesResDto } from './dto/get-butterflies-req.dto';
+import { ButterflyDto } from './dto/get-butterflies-req.dto';
 
 @Injectable()
 export class EggService {
@@ -11,7 +13,7 @@ export class EggService {
     @InjectRepository(Egg)
     private eggRepository: Repository<Egg>,
     @Inject(forwardRef(() => UserService))
-    private userService: UserService
+    private readonly userService: UserService
   ) {}
 
   async createEgg(): Promise<Egg> {
@@ -25,19 +27,18 @@ export class EggService {
     return egg;
   }
 
-  async getEggs(username: string): Promise<GetEggsResDto[]> {
+  async getEggs(username: string): Promise<any> {
     const user = await this.userService.getUser(username);
-    const eggs: Array<Egg> = user.contains;
-    if (eggs === undefined) {
-      return [];
-    }
-    const getEggsReqDto: GetEggsResDto[] = eggs.map((egg) => {
-      if (egg.id !== user.currEgg.id && egg.step === 0)
-        return {
-          id: egg.id,
-          color: egg.color,
-        };
+  }
+
+  async getButterflies(username: string): Promise<ButterflyDto[]> {
+    const eggs = await this.eggRepository.find({
+      select: ['id', 'color'],
+      where: { username: username, step: 3 } as any,
     });
-    return getEggsReqDto;
+
+    return eggs.map((egg) => {
+      return { id: egg.id, color: egg.color };
+    });
   }
 }
