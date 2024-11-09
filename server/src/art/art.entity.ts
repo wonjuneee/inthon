@@ -6,17 +6,18 @@ import {
   OneToOne,
   ManyToOne,
   OneToMany,
+  Check,
 } from 'typeorm';
 import { Egg } from 'src/egg/egg.entity';
 
 @Entity('Art')
+@Check('"questionIdx" >= 0 AND "questionIdx" <= 6')
 export class Art extends CommonEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
-    type: 'enum',
-    enum: [0, 1, 2, 3, 4, 5, 6], // 6: special question
+    type: 'int',
   })
   questionIdx: number;
 

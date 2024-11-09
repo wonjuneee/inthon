@@ -7,11 +7,13 @@ import {
   OneToMany,
   ManyToOne,
   JoinColumn,
+  Check,
 } from 'typeorm';
 import { Art } from 'src/art/art.entity';
 import { User } from 'src/user/user.entity';
 
 @Entity('Egg')
+@Check('"step" >= 0 AND "step" <= 3')
 export class Egg extends CommonEntity {
   constructor() {
     super();
@@ -22,8 +24,7 @@ export class Egg extends CommonEntity {
   id: number;
 
   @Column({
-    type: 'enum',
-    enum: [0, 1, 2, 3],
+    type: 'int',
     default: 0,
   })
   step: number;
