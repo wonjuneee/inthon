@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { PerformanceService } from './performance.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Performance } from './performance.entity';
 
 @Module({
-  providers: [PerformanceService]
+  imports: [TypeOrmModule.forFeature([Performance])],
+  providers: [PerformanceService],
 })
 export class PerformanceModule {}

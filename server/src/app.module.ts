@@ -17,6 +17,8 @@ import { ImageService } from './image/image.service';
 import { PerformanceModule } from './performance/performance.module';
 import { PerformanceController } from './performance/performance.controller';
 import dbConfig from './config/db.config';
+import { PerformanceService } from './performance/performance.service';
+import { AwsService } from './aws/aws.service';
 
 @Module({
   imports: [
@@ -28,17 +30,7 @@ import dbConfig from './config/db.config';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule.forFeature(dbConfig)],
       inject: [dbConfig.KEY],
-      useFactory: (config: ConfigType<typeof dbConfig>) => ({
-        type: 'postgres',
-        host: config.host,
-        port: config.port,
-        username: config.username,
-        password: config.password,
-        database: config.database,
-        entities: [__dirname + '/*/*.entity{.ts,.js}'],
-        synchronize: config.env === 'production' ? false : true,
-        logging: true,
-      }),
+      useFactory: TypeormConfig,
     }),
     AuthModule,
     UserModule,
@@ -53,6 +45,6 @@ import dbConfig from './config/db.config';
     ImagesController,
     PerformanceController,
   ],
-  providers: [AppService, AuthService, ImageService],
+  providers: [AppService, AuthService],
 })
 export class AppModule {}
