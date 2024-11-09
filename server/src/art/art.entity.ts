@@ -24,5 +24,4 @@ export class Art extends CommonEntity {
   @OneToMany(()=>Egg, egg => egg.currArt)
   @JoinColumn()
   currentEgg: Egg;
-
 }
