@@ -4,8 +4,6 @@ import { Art } from 'src/art/art.entity';
 import { OneToOne } from 'typeorm';
 import { User } from 'src/user/user.entity';
 
-
-
 @Entity('Egg')
 
 export class Egg extends CommonEntity {
