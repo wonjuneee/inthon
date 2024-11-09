@@ -4,17 +4,16 @@ import { Egg } from '../models/egg';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../components/context/AuthContent';
 
-const EggPage: React.FC = () => {
+const ButterflyContainerPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
   const { user, isLoggedIn } = useAuth();
 
-  // 알 더미 데이터
   //   const dummyEggs: Egg[] = [
-  //     { id: 1, step: 0, color: 0xff5733, currArt: null, totalArt: null },
-  //     { id: 2, step: 0, color: 0x33c4ff, currArt: null, totalArt: null },
-  //     { id: 3, step: 0, color: 0x85ff33, currArt: null, totalArt: null },
-  //     { id: 4, step: 0, color: 0xff33f6, currArt: null, totalArt: null },
-  //     { id: 5, step: 1, color: 0x33ff57, currArt: null, totalArt: null }, // step이 1이므로 필터링되지 않음
+  //     { id: 1, step: 3, color: 0xff5733, currArt: null, totalArt: null },
+  //     { id: 2, step: 3, color: 0x33c4ff, currArt: null, totalArt: null },
+  //     { id: 3, step: 3, color: 0x85ff33, currArt: null, totalArt: null },
+  //     { id: 4, step: 3, color: 0xff33f6, currArt: null, totalArt: null },
+  //     { id: 4, step: 2, color: 0xfd33f6, currArt: null, totalArt: null },
   //   ];
 
   const fetchEggList = async () => {
@@ -23,26 +22,18 @@ const EggPage: React.FC = () => {
       return;
     }
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-eggs`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-butterflies`, {
         params: { username: user.username },
       });
       if (response.status === 200) {
-        const filteredEggs = response.data.eggs.filter((egg: Egg) => egg.step === 0 && egg.id !== user?.currEgg);
+        const filteredEggs = response.data.eggs.filter((egg: Egg) => egg.step === 3);
         setEggList(filteredEggs);
       }
     } catch (error) {
       console.error('알 데이터를 가져오는 중 오류가 발생했습니다.', error);
     }
-    // 더미 데이터 사용
-    // if (user) {
-    //   // user 정보 로그로 확인
-    //   console.log('User data:', user);
-
-    //   // 더미 알 데이터 필터링
-    //   const filteredEggs = dummyEggs.filter(egg => egg.step === 0 && egg.id !== user.currEgg);
-    //   console.log('Filtered Eggs:', filteredEggs);
-    //   setEggList(filteredEggs);
-    // }
+    // const filteredEggs = dummyEggs.filter((egg: Egg) => egg.step === 3);
+    // setEggList(filteredEggs);
   };
 
   useEffect(() => {
@@ -51,25 +42,15 @@ const EggPage: React.FC = () => {
     }
   }, [user, isLoggedIn]);
 
-  const handleCardClick = async (index: number) => {
-    if (!user) return;
-
-    const selectedEgg = eggList[index];
-    try {
-      await axios.patch(`${process.env.REACT_APP_API_URL}/user/update-curr-egg`, {
-        username: user.username,
-        id: selectedEgg.id,
-      });
-    } catch (error) {
-      console.error('선택한 알을 업데이트하는 중 오류가 발생했습니다.', error);
-    }
+  const handleCardClick = (index: number) => {
+    alert(`나비 ${index + 1}을 선택하셨습니다.`);
   };
 
   return (
     <Layout className="layout">
       <div className="text-center" style={{ paddingBottom: '24px' }}>
         <Typography.Title level={3} className="mb-0">
-          알 보관함
+          나비 보관함
         </Typography.Title>
       </div>
       <Row gutter={[34, 34]} justify="center">
@@ -91,10 +72,10 @@ const EggPage: React.FC = () => {
             >
               <Card style={{ height: '100%', width: '100%', borderRadius: '10px', overflow: 'hidden', background: 'transparent', boxShadow: 'none', flexShrink: 0 }}>
                 <img
-                  src="/assets/egg.png"
+                  src="/assets/butterfly.png"
                   alt="Egg"
                   style={{
-                    transform: 'scale(1.8) translateY(-33%)',
+                    transform: 'scale(1.8) translateY(-22%)',
                     position: 'relative',
                     width: '400px', // 이미지 확대
                     height: 'auto',
@@ -111,4 +92,4 @@ const EggPage: React.FC = () => {
   );
 };
 
-export default EggPage;
+export default ButterflyContainerPage;

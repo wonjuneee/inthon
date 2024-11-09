@@ -5,17 +5,14 @@ import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
-import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 import { AwsModule } from './aws/aws.module';
 import { TypeormConfig } from './config/typeorm.config';
 import { PerformanceModule } from './performance/performance.module';
 import { PerformanceController } from './performance/performance.controller';
 import dbConfig from './config/db.config';
-import { PerformanceService } from './performance/performance.service';
-import { AwsService } from './aws/aws.service';
 
 @Module({
   imports: [
@@ -34,12 +31,7 @@ import { AwsService } from './aws/aws.service';
     AwsModule,
     PerformanceModule,
   ],
-  controllers: [
-    AppController,
-    AuthController,
-    UserController,
-    PerformanceController,
-  ],
+  controllers: [AppController, AuthController],
   providers: [AppService, AuthService],
 })
 export class AppModule {}

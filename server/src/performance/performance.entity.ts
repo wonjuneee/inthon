@@ -1,6 +1,7 @@
-import { Column, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { CommonEntity } from '../common/common.entity';
 
+@Entity('Performance')
 export class Performance extends CommonEntity {
   @PrimaryColumn({ type: 'varchar', length: 255 })
   eventId: string;
@@ -21,5 +22,5 @@ export class Performance extends CommonEntity {
   poster: string;
 
   @Column({ type: 'varchar', length: 31 })
-  genre: string;
+  genreNm: string;
 }

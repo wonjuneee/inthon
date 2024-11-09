@@ -6,6 +6,7 @@ import PerformancePage from '../pages/PerformancePage';
 import ButterflyPage from '../pages/ButterflyPage';
 import EggPage from '../pages/EggPage';
 import PerformanceListPage from '../pages/PerformanceListPage';
+import ButterflyContainerPage from '../pages/ButterflyContainer';
 
 export function RouteComponent() {
   return (
@@ -17,6 +18,7 @@ export function RouteComponent() {
       <Route path="performance" element={<PerformancePage />} />
       <Route path="butterfly" element={<ButterflyPage />} />
       <Route path="egg" element={<EggPage />} />
+      <Route path="butterfly-container" element={<ButterflyContainerPage />} />
     </Routes>
   );
 }
