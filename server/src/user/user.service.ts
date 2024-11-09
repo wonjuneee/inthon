@@ -37,4 +37,12 @@ export class UserService {
     }
     return user;
   }
+
+  async updateCurrEgg(username: string, id: number): Promise<UpdateResult> {
+    const egg = await this.eggService.getEgg(id);
+    return await this.userRepository.update(
+      { username: username },
+      { currEgg: egg }
+    );
+  }
 }
