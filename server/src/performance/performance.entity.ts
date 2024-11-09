@@ -1,6 +1,5 @@
-import { Column, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, PrimaryColumn } from 'typeorm';
 import { CommonEntity } from '../common/common.entity';
-import { Art } from '../art/art.entity';
 
 export class Performance extends CommonEntity {
   @PrimaryColumn({ type: 'varchar', length: 255 })

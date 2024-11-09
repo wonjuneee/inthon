@@ -1,15 +1,12 @@
 import { CommonEntity } from 'src/common/common.entity';
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToOne,
+  Column,
   OneToOne,
-  JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { Egg } from 'src/egg/egg.entity';
-import { Performance } from '../performance/performance.entity';
 
 @Entity('Art')
 export class Art extends CommonEntity {

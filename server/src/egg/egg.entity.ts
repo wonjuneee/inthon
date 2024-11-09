@@ -1,14 +1,14 @@
 import { CommonEntity } from 'src/common/common.entity';
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  OneToMany,
   ManyToOne,
   JoinColumn,
-  OneToMany,
 } from 'typeorm';
 import { Art } from 'src/art/art.entity';
-import { OneToOne } from 'typeorm';
 import { User } from 'src/user/user.entity';
 
 @Entity('Egg')
