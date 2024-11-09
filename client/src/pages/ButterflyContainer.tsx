@@ -22,7 +22,7 @@ const ButterflyContainerPage: React.FC = () => {
       return;
     }
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-eggs`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/egg/get-butterflies`, {
         params: { username: user.username },
       });
       if (response.status === 200) {
