@@ -13,6 +13,11 @@ import { User } from 'src/user/user.entity';
 
 @Entity('Egg')
 export class Egg extends CommonEntity {
+  constructor() {
+    super();
+    this.color = Math.floor(Math.random() * 4);
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
