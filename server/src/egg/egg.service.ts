@@ -16,8 +16,9 @@ export class EggService {
     private readonly userService: UserService
   ) {}
 
-  async createEgg(): Promise<Egg> {
-    const egg = this.eggRepository.create();
+  async createEgg(username: string): Promise<Egg> {
+    const user = await this.userService.getUser(username);
+    const egg = this.eggRepository.create({ user: user });
     await this.eggRepository.save(egg);
     return egg;
   }
