@@ -12,9 +12,14 @@ export default function CustomButton({ text }: CustomButtonProps) {
       style={{
         height: '48px',
         width: '354px',
+        backgroundColor: 'var(--primary)',
+        borderRadius: '10px',
+        boxShadow: 'var(--shadow)',
       }}
     >
-      {text}
+      <span className="subtitle" style={{ color: 'white' }}>
+        {text}
+      </span>
     </Button>
   );
 }
