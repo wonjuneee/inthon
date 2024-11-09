@@ -19,18 +19,60 @@ const ButterflyPage = () => {
   // }, []);
 
   const arts: Art[] = [
-    { id: 0, questionIdx: null, imagePath: '', description: null, createdAt: null, updatedAt: null },
-    { id: 1, questionIdx: null, imagePath: '', description: null, createdAt: null, updatedAt: null },
-    { id: 2, questionIdx: null, imagePath: '', description: null, createdAt: null, updatedAt: null },
-    { id: 3, questionIdx: null, imagePath: '', description: null, createdAt: null, updatedAt: null },
-    { id: 4, questionIdx: null, imagePath: '', description: null, createdAt: null, updatedAt: null },
-    { id: 5, questionIdx: null, imagePath: '', description: null, createdAt: null, updatedAt: null },
+    {
+      id: 1,
+      questionIdx: null,
+      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+      description: null,
+      createdAt: null,
+      updatedAt: null,
+    },
+    {
+      id: 2,
+      questionIdx: null,
+      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+      description: null,
+      createdAt: null,
+      updatedAt: null,
+    },
+    {
+      id: 3,
+      questionIdx: null,
+      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+      description: null,
+      createdAt: null,
+      updatedAt: null,
+    },
+    {
+      id: 4,
+      questionIdx: null,
+      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+      description: null,
+      createdAt: null,
+      updatedAt: null,
+    },
+    {
+      id: 5,
+      questionIdx: null,
+      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+      description: null,
+      createdAt: null,
+      updatedAt: null,
+    },
+    {
+      id: 6,
+      questionIdx: null,
+      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+      description: null,
+      createdAt: null,
+      updatedAt: null,
+    },
   ];
 
   const navigate = useNavigate();
 
   const handleArtClick = (id: number) => {
-    navigate('/art', { state: { id: id } });
+    navigate('/art', { state: { artId: id } });
   };
 
   return (

@@ -23,7 +23,7 @@ const PerformancePage = () => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate(`/art`);
+    navigate(`/art`, { state: { artId: 0 } });
   };
 
   return (
