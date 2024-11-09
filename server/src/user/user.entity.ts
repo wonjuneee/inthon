@@ -5,11 +5,12 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity('users')
+
 export class UserEntity extends CommonEntity {
+
   @PrimaryGeneratedColumn()
   id: string;
 
