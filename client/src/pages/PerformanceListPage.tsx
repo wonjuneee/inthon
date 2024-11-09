@@ -2,11 +2,39 @@ import { Layout, Row, Col } from 'antd';
 
 import poster from '../assets/poster.png';
 import Spacer from '../components/common/Spacer';
+import { Performance } from '../models/performance';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const PerformanceListPage: React.FC = () => {
-  const handleCardClick = (index: number) => {
-    alert(`공연 ${index + 1}을 선택하셨습니다.`);
+const PerformanceListPage = () => {
+  // const [performances, setPerformances] = useState<Performance[]>([]);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.SERVER_URL}/performance/get-all`)
+  //     .then(res => setPerformances(res.data))
+  //     .catch(err => console.log(err));
+  // }, []);
+
+  const performances: Performance[] = [
+    { eventId: '8', prfNm: 'MJ 매직 쇼 0', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
+    { eventId: '9', prfNm: 'MJ 매직 쇼 1', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
+    { eventId: '10', prfNm: 'MJ 매직 쇼 2', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
+    { eventId: '11', prfNm: 'MJ 매직 쇼 3', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
+    { eventId: '12', prfNm: 'MJ 매직 쇼 4', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
+    { eventId: '13', prfNm: 'MJ 매직 쇼 5', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
+    { eventId: '14', prfNm: 'MJ 매직 쇼 6', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
+    { eventId: '15', prfNm: 'MJ 매직 쇼 7', prfStart: null, prfEnd: null, placeNm: null, poster: poster, genreNm: null },
+  ];
+
+  const navigate = useNavigate();
+
+  const handlePosterClick = (id: string) => {
+    alert(`공연 ${id}을 선택하셨습니다.`);
+    navigate(`/performance/${id}`);
   };
+
   return (
     <Layout className="layout">
       <Spacer height={24} />
@@ -16,13 +44,13 @@ const PerformanceListPage: React.FC = () => {
       <Spacer height={24} />
 
       <Row gutter={[24, 24]} justify="center">
-        {Array.from({ length: 6 }).map((_, index) => (
+        {Array.from(performances).map((performance, index) => (
           <Col key={index} style={{ padding: '0' }}>
-            <button onClick={() => handleCardClick(index)}>
-              <img src={poster} style={{ width: '160px', height: '231px', objectFit: 'contain' }} />
+            <button onClick={() => handlePosterClick(performance.eventId)}>
+              <img src={performance.poster} style={{ width: '160px', height: '231px', objectFit: 'contain' }} />
               <Spacer height={16} />
               <p className="subtitle" color="var(--black)">
-                MJ 매직 쇼
+                {performance.prfNm}
               </p>
             </button>
           </Col>

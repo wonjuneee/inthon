@@ -1,15 +1,120 @@
 import { Layout } from 'antd';
-import { FaCamera } from 'react-icons/fa';
+import { FaCamera, FaCircle } from 'react-icons/fa';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 
-import QuestContainer from '../components/common/QuestContainer';
 import { questions } from '../utils/constants';
+import QuestContainer from '../components/common/QuestContainer';
 import CustomButton from '../components/common/CustomButton';
 import Spacer from '../components/common/Spacer';
+import { Art } from '../models/art';
 
 const ArtPage = () => {
-  return (
+  // const location = useLocation();
+  // const artId = location.state.id;
+
+  // const [art, setArt] = useState<Art | null>(null);
+  const [description, setDescription] = useState<string>('');
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.SERVER_URL}/art/get-art?id=${artId}`)
+  //     .then(res => setArt(res.data))
+  //     .catch(err => console.log(err));
+  // }, []);
+
+  const art: Art = { id: 0, questionIdx: 0, imagePath: null, description: null, createdAt: null, updatedAt: null };
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.target.value);
+  };
+
+  /* 카메라 관련 */
+  const [image, setImage] = useState<string | null>(null);
+  const [isShowCamera, setIsShowCamera] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleCameraClick = () => {
+    setIsShowCamera(true);
+  };
+
+  useEffect(() => {
+    if (isShowCamera && videoRef.current) {
+      const constraints = { video: true, audio: false };
+
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(stream => {
+          if (videoRef) {
+            videoRef.current!.srcObject = stream;
+          }
+        })
+        .catch(error => {
+          console.error('Error accessing camera:', error);
+        });
+    }
+  }, [isShowCamera]);
+
+  const handleCaptureClick = () => {
+    if (videoRef) {
+      videoRef.current!.pause();
+      saveImage();
+    }
+  };
+
+  const saveImage = () => {
+    // 1. canvas Element 생성
+    const canvas = document.createElement('canvas');
+    canvas.width = videoRef.current!.videoWidth;
+    canvas.height = videoRef.current!.videoHeight;
+
+    // 2. canvas에 video 이미지 그리기
+    const context = canvas.getContext('2d');
+    if (context != null) {
+      context.drawImage(videoRef.current!, 0, 0);
+    }
+
+    // 3. canvas 를 Data URL로 변경
+    const dataUrl = canvas.toDataURL('image/png');
+
+    // 4. Image 다운로드
+    setImage(dataUrl);
+
+    stopCamera();
+  };
+
+  const stopCamera = () => {
+    const stream = videoRef.current?.srcObject as MediaStream | null;
+    if (stream) {
+      stream.getTracks().forEach(track => {
+        track.stop();
+      });
+      videoRef.current!.srcObject = null;
+    }
+
+    setIsShowCamera(false);
+  };
+
+  return isShowCamera ? (
+    <Layout>
+      <video ref={videoRef} autoPlay={true} style={{ objectFit: 'cover', height: '874px' }}></video>
+      <button
+        onClick={handleCaptureClick}
+        style={{
+          position: 'absolute',
+          bottom: '100px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: '10',
+        }}
+      >
+        <FaCircle size={64} color="var(--primary)" style={{ boxShadow: 'var(--shadow' }} />
+      </button>
+    </Layout>
+  ) : (
     <Layout className="layout">
-      <QuestContainer content={questions[0]} />
+      <QuestContainer content={questions[art?.questionIdx!]} />
       <Spacer height={40} />
 
       <p className="title self-start" color="var(--black)">
@@ -17,9 +122,29 @@ const ArtPage = () => {
       </p>
       <Spacer height={16} />
 
-      <div className="flex justify-center items-center" style={{ width: '354px', height: '354px', backgroundColor: 'var(--primary-container)', borderRadius: '10px', boxShadow: 'var(--shadow)' }}>
-        <FaCamera size={64} color="var(--primary)" />
-      </div>
+      {image ? (
+        <button
+          onClick={handleCameraClick}
+          className="flex justify-center items-center"
+          style={{
+            width: '354px',
+            height: '354px',
+            borderRadius: '10px',
+            boxShadow: 'var(--shadow)',
+            backgroundImage: `url(${image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+      ) : (
+        <button
+          onClick={handleCameraClick}
+          className="flex justify-center items-center"
+          style={{ width: '354px', height: '354px', backgroundColor: 'var(--primary-container)', borderRadius: '10px', boxShadow: 'var(--shadow)' }}
+        >
+          <FaCamera size={64} color="var(--primary)" />
+        </button>
+      )}
       <Spacer height={40} />
 
       <p className="title self-start" color="var(--black)">
@@ -40,12 +165,15 @@ const ArtPage = () => {
             fontSize: '14px',
             resize: 'none',
           }}
+          readOnly={art?.description !== null}
+          value={art?.description ?? description}
+          onChange={handleTextChange}
         />
       </div>
       <Spacer height={8} />
 
       <p className="body self-end" color="var(--gray-500)">
-        0/255
+        {description.length}/255
       </p>
       <Spacer height={24} />
 

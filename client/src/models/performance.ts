@@ -12,7 +12,7 @@
  */
 
 export interface Performance {
-  eventId: number;
+  eventId: string;
   prfNm: string;
   prfStart: Date | null;
   prfEnd: Date | null;
