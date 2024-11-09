@@ -2,62 +2,64 @@ import { Layout, Typography, Row, Col, Card } from 'antd';
 import axios from 'axios';
 import { Egg } from '../models/egg';
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../components/context/AuthContent';
+
+const color_images: { [key: number]: string } = {
+  1: '/assets/egg_yellow.png',
+  2: '/assets/egg_orange.png',
+  3: '/assets/egg_blue.png',
+  4: '/assets/egg_white.png',
+};
+
+//더미 테스트
+// const dummyEggs: Egg[] = [
+//   { id: 1, step: 0, color: 1, currArt: 1, totalArt: 'Art for egg 1' },
+//   { id: 2, step: 0, color: 2, currArt: 2, totalArt: 'Art for egg 2' },
+//   { id: 3, step: 0, color: 3, currArt: 3, totalArt: 'Art for egg 3' },
+//   { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+// ];
 
 const EggPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
-  const { user, isLoggedIn } = useAuth();
+  //더미 테스트용 코드
+  //   const [user, setUser] = useState<{ username: string; currEgg: number } | null>({ username: 'test_user', currEgg: 1 });
 
-  // 알 더미 데이터
-  //   const dummyEggs: Egg[] = [
-  //     { id: 1, step: 0, color: 0xff5733, currArt: null, totalArt: null },
-  //     { id: 2, step: 0, color: 0x33c4ff, currArt: null, totalArt: null },
-  //     { id: 3, step: 0, color: 0x85ff33, currArt: null, totalArt: null },
-  //     { id: 4, step: 0, color: 0xff33f6, currArt: null, totalArt: null },
-  //     { id: 5, step: 1, color: 0x33ff57, currArt: null, totalArt: null }, // step이 1이므로 필터링되지 않음
-  //   ];
+  //   useEffect(() => {
+  //     // API 대신 더미 데이터 사용
+  //     setEggList(dummyEggs);
+  //   }, []);
+
+  //   const handleCardClick = (index: number) => {
+  //     if (!user) return;
+
+  //     const selectedEgg = eggList[index];
+  //     setUser(prev => (prev ? { ...prev, currEgg: selectedEgg.id } : null));
+  //     localStorage.setItem('user', JSON.stringify({ ...user, currEgg: selectedEgg.id }));
+  //   };
+
+  const username = localStorage.getItem('username');
 
   const fetchEggList = async () => {
-    if (!user || !user.username) {
-      console.warn('User information is not available');
-      return;
-    }
     try {
       const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-eggs`, {
-        params: { username: user.username },
+        params: { username: username },
       });
       if (response.status === 200) {
-        const filteredEggs = response.data.eggs.filter((egg: Egg) => egg.step === 0 && egg.id !== user?.currEgg);
-        setEggList(filteredEggs);
+        setEggList(response.data);
       }
     } catch (error) {
       console.error('알 데이터를 가져오는 중 오류가 발생했습니다.', error);
     }
-    // 더미 데이터 사용
-    // if (user) {
-    //   // user 정보 로그로 확인
-    //   console.log('User data:', user);
-
-    //   // 더미 알 데이터 필터링
-    //   const filteredEggs = dummyEggs.filter(egg => egg.step === 0 && egg.id !== user.currEgg);
-    //   console.log('Filtered Eggs:', filteredEggs);
-    //   setEggList(filteredEggs);
-    // }
   };
 
   useEffect(() => {
-    if (isLoggedIn && user) {
-      fetchEggList();
-    }
-  }, [user, isLoggedIn]);
+    fetchEggList();
+  }, []);
 
   const handleCardClick = async (index: number) => {
-    if (!user) return;
-
     const selectedEgg = eggList[index];
     try {
       await axios.patch(`${import.meta.env.VITE_SERVER_URL}/user/update-curr-egg`, {
-        username: user.username,
+        username: username,
         id: selectedEgg.id,
       });
     } catch (error) {
@@ -91,7 +93,7 @@ const EggPage: React.FC = () => {
             >
               <Card style={{ height: '100%', width: '100%', borderRadius: '10px', overflow: 'hidden', background: 'transparent', boxShadow: 'none', flexShrink: 0 }}>
                 <img
-                  src="/assets/egg.png"
+                  src={color_images[egg.color] || '/assets/egg.png'}
                   alt="Egg"
                   style={{
                     transform: 'scale(1.8) translateY(-33%)',
