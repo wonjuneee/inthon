@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
+import { TypeormConfig } from './config/typeorm.config';
 import dbConfig from './config/db.config';
 
 @Module({
@@ -22,7 +23,7 @@ import dbConfig from './config/db.config';
       imports: [ConfigModule.forFeature(dbConfig)],
       inject: [dbConfig.KEY],
       useFactory: (config: ConfigType<typeof dbConfig>) => ({
-        type: 'postgres',
+        type: 'mysql',
         host: config.host,
         port: config.port,
         username: config.username,
