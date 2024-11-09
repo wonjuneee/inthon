@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
 
   const handleQuestClick = () => {
     alert('QuestContainer 버튼이 클릭되었습니다!');
-    navigate('/art');
+    navigate('/art', { state: { id: artData?.id } });
   };
   const handleImageClick = () => {
     if (eggData?.step === STEP.butterfly) {
