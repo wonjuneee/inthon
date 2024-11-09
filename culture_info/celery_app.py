@@ -17,6 +17,7 @@ celery_app.conf.beat_schedule = {
 # 타임존 설정
 celery_app.conf.timezone = 'Asia/Seoul'
 celery_app.conf.enable_utc = False
+celery_app.conf.broker_connection_retry_on_startup = True
 
 
 from tasks import etl
