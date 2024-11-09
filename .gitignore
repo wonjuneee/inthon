@@ -1,1 +1,6 @@
 .DS_Store
+
+culture_info/venv/
+culture_info/.env
+culture_info/celerybeat-schedule.db
+culture_info/etl.log
