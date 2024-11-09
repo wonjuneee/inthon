@@ -1,6 +1,7 @@
 networks:
   inthon-bridge:
     driver: bridge
+    name: inthon-bridge
 
 services:
   object_detection:
