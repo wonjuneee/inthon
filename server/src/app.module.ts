@@ -7,7 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
+import { EggUserModule } from './user/user.module';
 import { AwsModule } from './aws/aws.module';
 import { TypeormConfig } from './config/typeorm.config';
 import { PerformanceModule } from './performance/performance.module';
@@ -29,7 +29,7 @@ import { EggModule } from './egg/egg.module';
       useFactory: TypeormConfig,
     }),
     AuthModule,
-    UserModule,
+    EggUserModule,
     AwsModule,
     ArtModule,
     EggModule,
