@@ -21,12 +21,9 @@ const ArtPage = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_SERVER_URL}/art/get-art`, {
-        params: { id: artId },
-      })
-      .then(res => setArt(res.data))
+      .get(`${import.meta.env.VITE_SERVER_URL}/art/get-art/${artId}`)
+      .then(res => console.log(res.data))
       .catch(err => console.log(err));
-
     // setArt(
     //   arts.find(art => art.id === artId) ?? {
     //     id: 0,
@@ -39,64 +36,64 @@ const ArtPage = () => {
     // );
   }, []);
 
-  // const arts: Art[] = [
-  //   {
-  //     id: 0,
-  //     questionIdx: 1,
-  //     imagePath: null,
-  //     description: null,
-  //     createdAt: null,
-  //     updatedAt: null,
-  //   },
-  //   {
-  //     id: 1,
-  //     questionIdx: 0,
-  //     imagePath: 'https://github.com/user-attachments/assets/9c2529b1-2719-4dae-aa68-edaea3a9328e',
-  //     description: '단풍이 예뻤다.',
-  //     createdAt: null,
-  //     updatedAt: null,
-  //   },
-  //   {
-  //     id: 2,
-  //     questionIdx: 1,
-  //     imagePath: 'https://github.com/user-attachments/assets/2f6b6b7f-3c22-4a74-9b74-500343e73fdd',
-  //     description: '너무 예뻤다.',
-  //     createdAt: null,
-  //     updatedAt: null,
-  //   },
-  //   {
-  //     id: 3,
-  //     questionIdx: 2,
-  //     imagePath: 'https://github.com/user-attachments/assets/4de52fc4-9850-4c87-a134-90ce41acb974',
-  //     description: '빨간 머리 엔',
-  //     createdAt: null,
-  //     updatedAt: null,
-  //   },
-  //   {
-  //     id: 4,
-  //     questionIdx: 3,
-  //     imagePath: 'https://github.com/user-attachments/assets/929bd706-e2dc-484b-b2fc-08616efbe38b',
-  //     description: '나는 아름다운 나비~~',
-  //     createdAt: null,
-  //     updatedAt: null,
-  //   },
-  //   {
-  //     id: 5,
-  //     questionIdx: 4,
-  //     imagePath: 'https://github.com/user-attachments/assets/3b021c31-f1d4-43f4-8eec-95ef830970eb',
-  //     description: '책책책책 노잼.',
-  //     createdAt: null,
-  //     updatedAt: null,
-  //   },
-  //   {
-  //     id: 6,
-  //     questionIdx: 5,
-  //     imagePath: 'https://github.com/user-attachments/assets/b3e2e3f8-9abe-4d71-b1f1-6fbc595f16a3',
-  //     description: '펑펑 눈이옵니다',
-  //     createdAt: null,
-  //     updatedAt: null,
-  //   },
-  // ];
+  const arts: Art[] = [
+    {
+      id: 0,
+      questionIdx: 0,
+      imagePath: null,
+      description: null,
+      createdAt: null,
+      updatedAt: null,
+    },
+    {
+      id: 1,
+      questionIdx: 0,
+      imagePath: 'https://github.com/user-attachments/assets/9c2529b1-2719-4dae-aa68-edaea3a9328e',
+      description: '단풍이 예뻤다.',
+      createdAt: null,
+      updatedAt: null,
+    },
+    {
+      id: 2,
+      questionIdx: 1,
+      imagePath: 'https://github.com/user-attachments/assets/2f6b6b7f-3c22-4a74-9b74-500343e73fdd',
+      description: '너무 예뻤다.',
+      createdAt: null,
+      updatedAt: null,
+    },
+    {
+      id: 3,
+      questionIdx: 2,
+      imagePath: 'https://github.com/user-attachments/assets/4de52fc4-9850-4c87-a134-90ce41acb974',
+      description: '빨간 머리 엔',
+      createdAt: null,
+      updatedAt: null,
+    },
+    {
+      id: 4,
+      questionIdx: 3,
+      imagePath: 'https://github.com/user-attachments/assets/929bd706-e2dc-484b-b2fc-08616efbe38b',
+      description: '나는 아름다운 나비~~',
+      createdAt: null,
+      updatedAt: null,
+    },
+    {
+      id: 5,
+      questionIdx: 4,
+      imagePath: 'https://github.com/user-attachments/assets/3b021c31-f1d4-43f4-8eec-95ef830970eb',
+      description: '책책책책 노잼.',
+      createdAt: null,
+      updatedAt: null,
+    },
+    // {
+    //   id: 6,
+    //   questionIdx: 5,
+    //   imagePath: 'https://github.com/user-attachments/assets/b3e2e3f8-9abe-4d71-b1f1-6fbc595f16a3',
+    //   description: '펑펑 눈이옵니다',
+    //   createdAt: null,
+    //   updatedAt: null,
+    // },
+  ];
   // const art: Art = { id: 0, questionIdx: 0, imagePath: null, description: null, createdAt: null, updatedAt: null };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -106,48 +103,49 @@ const ArtPage = () => {
   const navigate = useNavigate();
 
   const handleSaveClick = async () => {
-    if (!image) return;
+    // if (!image) return;
 
-    const byteString = atob(image.split(',')[1]);
-    const mimeString = image.split(',')[0].split(':')[1].split(';')[0];
+    // const byteString = atob(image.split(',')[1]);
+    // const mimeString = image.split(',')[0].split(':')[1].split(';')[0];
 
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const uintArray = new Uint8Array(arrayBuffer);
+    // const arrayBuffer = new ArrayBuffer(byteString.length);
+    // const uintArray = new Uint8Array(arrayBuffer);
 
-    for (let i = 0; i < byteString.length; i++) {
-      uintArray[i] = byteString.charCodeAt(i);
-    }
+    // for (let i = 0; i < byteString.length; i++) {
+    //   uintArray[i] = byteString.charCodeAt(i);
+    // }
 
-    const blob = new Blob([arrayBuffer], { type: mimeString });
-    const file = new File([blob], 'image.png', { type: mimeString });
-    const formData = new FormData();
-    formData.append('image', file);
+    // const blob = new Blob([arrayBuffer], { type: mimeString });
+    // const file = new File([blob], 'image.png', { type: mimeString });
+    // const formData = new FormData();
+    // formData.append('image', file);
 
-    try {
-      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/art/upload`, { id: artId, image: formData, description: description }, { headers: { 'Content-Type': 'application/json' } });
+    // try {
+    //   const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/art/upload`, { id: artId, image: formData, description: description }, { headers: { 'Content-Type': 'application/json' } });
 
-      if (response.status === 201) {
-        // ai 호출
-        const imgUrl = response.data.imagePath;
-        const response1 = await axios.post(
-          `${import.meta.env.VITE_SERVER_URL}/art/send-detection`,
-          { imagePath: imgUrl, keyword: keywords[art?.questionIdx!] },
-          { headers: { 'Content-Type': 'application/json' } }
-        );
+    //   if (response.status === 201) {
+    //     // ai 호출
+    //     const imgUrl = response.data.imagePath;
+    //     const response1 = await axios.post(
+    //       `${import.meta.env.VITE_SERVER_URL}/art/send-detection`,
+    //       { imagePath: imgUrl, keyword: keywords[art?.questionIdx!] },
+    //       { headers: { 'Content-Type': 'application/json' } }
+    //     );
 
-        if (response1.status == 201) {
-          if (art?.questionIdx === 6) {
-            navigate('/egg');
-          }
-          navigate('/');
-        } else {
-          setImgError('질문과 연관된 사진을 찍으세요!');
-        }
-      }
-      navigate('/');
-    } catch (error) {
-      console.error('Error uploading image:', error);
-    }
+    //     if (response1.status == 201) {
+    //       if (art?.questionIdx === 6) {
+    //         navigate('/egg');
+    //       }
+    //       navigate('/');
+    //     } else {
+    //       setImgError('질문과 연관된 사진을 찍으세요!');
+    //     }
+    //   }
+    //   navigate('/');
+    // } catch (error) {
+    //   console.error('Error uploading image:', error);
+    // }
+    navigate('/');
   };
 
   /* 카메라 관련 */
