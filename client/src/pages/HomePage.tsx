@@ -29,7 +29,9 @@ const HomePage: React.FC = () => {
         const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-current/${username}`);
         if (response.status === 200) {
           setEggData(response.data.egg);
-          setArtData(response.data.art);
+          setArtData(response.data.art[0]);
+          // setArtData({ id: 0, questionIdx: 0, imagePath: null, description: null, createdAt: null, updatedAt: null });
+          console.log(response.data);
         }
       } catch (error) {
         console.error('데이터 정보를 가져오는데 오류가 생겼습니다.', error);
@@ -62,6 +64,7 @@ const HomePage: React.FC = () => {
   const questContent = artData && artData.questionIdx != null ? questions[artData.questionIdx] : '질문 데이터 불러오는 중...';
 
   const handleQuestClick = () => {
+    console.log(artData);
     navigate('/art', { state: { artId: artData?.id } });
   };
 

@@ -9,91 +9,91 @@ const ButterflyContainerPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
   const username = localStorage.getItem('username');
 
-  const fetchEggList = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-butterflies/:${username}`);
-      if (response.status === 200) {
-        setEggList(response.data.eggs);
-      }
-    } catch (error) {
-      console.error('알 데이터를 가져오는 중 오류가 발생했습니다.', error);
-    }
-  };
+  // const fetchEggList = async () => {
+  //   try {
+  //     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-butterflies/:${username}`);
+  //     if (response.status === 200) {
+  //       setEggList(response.data.eggs);
+  //     }
+  //   } catch (error) {
+  //     console.error('알 데이터를 가져오는 중 오류가 발생했습니다.', error);
+  //   }
+  // };
 
   useEffect(() => {
-    fetchEggList();
-    // setEggList([
-    //   {
-    //     id: 0,
-    //     step: 3,
-    //     color: 0,
-    //     currArt: null,
-    //     totalArt: null,
-    //   },
-    //   {
-    //     id: 0,
-    //     step: 3,
-    //     color: 0,
-    //     currArt: null,
-    //     totalArt: null,
-    //   },
-    //   {
-    //     id: 0,
-    //     step: 3,
-    //     color: 0,
-    //     currArt: null,
-    //     totalArt: null,
-    //   },
-    //   {
-    //     id: 0,
-    //     step: 3,
-    //     color: 0,
-    //     currArt: null,
-    //     totalArt: null,
-    //   },
-    //   {
-    //     id: 0,
-    //     step: 3,
-    //     color: 0,
-    //     currArt: null,
-    //     totalArt: null,
-    //   },
-    //   {
-    //     id: 0,
-    //     step: 3,
-    //     color: 0,
-    //     currArt: null,
-    //     totalArt: null,
-    //   },
-    //   {
-    //     id: 0,
-    //     step: 3,
-    //     color: 0,
-    //     currArt: null,
-    //     totalArt: null,
-    //   },
-    //   {
-    //     id: 0,
-    //     step: 3,
-    //     color: 0,
-    //     currArt: null,
-    //     totalArt: null,
-    //   },
-    //   {
-    //     id: 0,
-    //     step: 3,
-    //     color: 0,
-    //     currArt: null,
-    //     totalArt: null,
-    //   },
-    //   {
-    //     id: 0,
-    //     step: 3,
-    //     color: 0,
-    //     currArt: null,
-    //     totalArt: null,
-    //   },
-    // ]);
+    // fetchEggList();
+    setEggList([
+      {
+        id: 0,
+        step: 3,
+        color: 0,
+        currArt: null,
+        totalArt: null,
+      },
+      {
+        id: 0,
+        step: 3,
+        color: 0,
+        currArt: null,
+        totalArt: null,
+      },
+      {
+        id: 0,
+        step: 3,
+        color: 0,
+        currArt: null,
+        totalArt: null,
+      },
+      {
+        id: 0,
+        step: 3,
+        color: 0,
+        currArt: null,
+        totalArt: null,
+      },
+      {
+        id: 0,
+        step: 3,
+        color: 0,
+        currArt: null,
+        totalArt: null,
+      },
+      {
+        id: 0,
+        step: 3,
+        color: 0,
+        currArt: null,
+        totalArt: null,
+      },
+      {
+        id: 0,
+        step: 3,
+        color: 0,
+        currArt: null,
+        totalArt: null,
+      },
+      {
+        id: 0,
+        step: 3,
+        color: 0,
+        currArt: null,
+        totalArt: null,
+      },
+      {
+        id: 0,
+        step: 3,
+        color: 0,
+        currArt: null,
+        totalArt: null,
+      },
+      {
+        id: 0,
+        step: 3,
+        color: 0,
+        currArt: null,
+        totalArt: null,
+      },
+    ]);
   }, []);
 
   const navigate = useNavigate();

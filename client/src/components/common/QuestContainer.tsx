@@ -9,13 +9,17 @@ export default function QuestContainer({ content, animate = false }: TextContain
   const [displayedContent, setDisplayedContent] = useState('');
 
   useEffect(() => {
-    setDisplayedContent('');
-    if (!animate || content === '질문 데이터 불러오는 중...') {
-      setDisplayedContent(content);
-      return;
-    } // animate가 false일 경우 애니메이션 실행 안 함
-
     let index = -1;
+    if (!animate) {
+      setDisplayedContent(content);
+      index = 0;
+      return;
+    } else if (content === '질문 데이터 불러오는 중...') {
+      setDisplayedContent('');
+    }
+
+    setDisplayedContent('');
+    index = 0;
     const intervalId = setInterval(() => {
       if (index < content.length - 1) {
         setDisplayedContent(prev => prev + content[index]);
