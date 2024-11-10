@@ -102,35 +102,38 @@ const ArtPage = () => {
   const navigate = useNavigate();
 
   const handleSaveClick = async () => {
-    // if (!image) return;
+    if (!image) return;
 
-    // const byteString = atob(image.split(',')[1]);
-    // const mimeString = image.split(',')[0].split(':')[1].split(';')[0];
+    const byteString = atob(image.split(',')[1]);
+    const mimeString = image.split(',')[0].split(':')[1].split(';')[0];
 
-    // const arrayBuffer = new ArrayBuffer(byteString.length);
-    // const uintArray = new Uint8Array(arrayBuffer);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uintArray = new Uint8Array(arrayBuffer);
 
-    // for (let i = 0; i < byteString.length; i++) {
-    //   uintArray[i] = byteString.charCodeAt(i);
-    // }
+    for (let i = 0; i < byteString.length; i++) {
+      uintArray[i] = byteString.charCodeAt(i);
+    }
 
-    // const blob = new Blob([arrayBuffer], { type: mimeString });
-    // const file = new File([blob], 'image.png', { type: mimeString });
-    // const formData = new FormData();
-    // formData.append('image', file);
+    const blob = new Blob([arrayBuffer], { type: mimeString });
+    const file = new File([blob], 'image.png', { type: mimeString });
+    const formData = new FormData();
+    formData.append('image', file);
 
     try {
-      // const response = await axios.post(
-      //   `${import.meta.env.VITE_SERVER_URL}/art/upload`,
-      //   { id: artId, image: formData, description: description },
-      //   {
-      //     headers: { 'Content-Type': 'application/json' },
-      //   }
-      // );
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/art/upload`,
+        { id: artId, image: formData, description: description },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
 
-      // if (response.status === 201) {
-      //   navigate('/');
-      // }
+      if (response.status === 201) {
+        if (art?.questionIdx === 6) {
+          navigate('/egg');
+        }
+        navigate('/');
+      }
       navigate('/');
     } catch (error) {
       console.error('Error uploading image:', error);
