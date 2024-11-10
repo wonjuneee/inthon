@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Art } from './art.entity';
 import { EggService } from 'src/egg/egg.service';
 import { GetTotalArtResDto } from './dto/get-total-art.res.dto';
+import { Egg } from 'src/egg/egg.entity';
 
 @Injectable()
 export class ArtService {
@@ -33,5 +34,12 @@ export class ArtService {
       ],
       where: { id },
     });
+  }
+
+  async getArtByEggId(egg: Egg): Promise<Art> {
+    return this.artRepository.find({
+      select: ['id', 'questionIdx'],
+      where: { egg: egg },
+    })[0];
   }
 }
