@@ -30,8 +30,10 @@ patrickjohncyh/fashion-clip https://huggingface.co/patrickjohncyh/fashion-clip
   - 24시간 주기로 공연 정보를 kopis 오픈 API로부터 가져와서 DB에 저장합니다.
 - 이 모든 컨테이너를 Docker compose로 통합하여 관리합니다.
 
-## 4. 프로젝트 설명
-~~ 프론트 결과 화면 추가 ~~
+## 4. 서비스 화면
+<img width="1215" alt="스크린샷 2024-11-10 오후 12 28 27" src="https://github.com/user-attachments/assets/6dd0f750-c976-4752-9c2c-7af9f463861e">
+<img width="1175" alt="스크린샷 2024-11-10 오후 12 28 37" src="https://github.com/user-attachments/assets/8cbfb148-4b39-4c95-ba76-5b4193e37e45">
+
 
 ## 5. 팀원 소개
 | 팀원명 | 학과       | 역할   | 맡은 일          |
