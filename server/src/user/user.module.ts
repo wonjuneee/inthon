@@ -1,14 +1,12 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { UserService } from './user.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user.entity';
-import { UserController } from './user.controller';
+import { Module } from '@nestjs/common';
+import { EggUserService } from './user.service';
+import { EggController } from './user.controller';
 import { EggModule } from 'src/egg/egg.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), forwardRef(() => EggModule)],
-  providers: [UserService],
-  controllers: [UserController],
-  exports: [UserService],
+  imports: [EggModule],
+  providers: [EggUserService],
+  controllers: [EggController],
+  exports: [EggUserService],
 })
 export class UserModule {}

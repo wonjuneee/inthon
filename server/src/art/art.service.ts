@@ -12,8 +12,8 @@ export class ArtService {
     private eggService: EggService
   ) {}
 
-  async getTotalArt(id: number): Promise<GetTotalArtResDto[]> {
-    const egg = await this.eggService.getEgg(id);
+  async getTotalArt(id: number, idx: number): Promise<GetTotalArtResDto[]> {
+    const egg = await this.eggService.getEgg(id, idx);
     const arts: GetTotalArtResDto[] = await this.artRepository.find({
       select: ['id', 'imagePath'],
       where: { egg: egg },
