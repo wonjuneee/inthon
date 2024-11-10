@@ -28,7 +28,7 @@ const PerformancePage = () => {
 
   return (
     <Layout className="layout">
-      <img src={performance?.poster} style={{ width: '354px', height: 'auto' }} />
+      <img src={performance?.poster} style={{ width: '354px', height: 'auto', objectFit: 'cover' }} />
       <Spacer height={40} />
       <p className="title self-start" color="var(--black)">
         {performance?.prfNm}

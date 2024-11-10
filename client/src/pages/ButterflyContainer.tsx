@@ -2,6 +2,7 @@ import { Layout, Typography, Row, Col, Card } from 'antd';
 import axios from 'axios';
 import { Egg } from '../models/egg';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ButterflyContainerPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
@@ -9,7 +10,7 @@ const ButterflyContainerPage: React.FC = () => {
 
   const fetchEggList = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-butterflies`, {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-butterflies?`, {
         params: { username: username },
       });
       if (response.status === 200) {
@@ -24,8 +25,10 @@ const ButterflyContainerPage: React.FC = () => {
     fetchEggList();
   }, []);
 
-  const handleCardClick = (index: number) => {
-    alert(`나비 ${index + 1}을 선택하셨습니다.`);
+  const navigate = useNavigate();
+
+  const handleCardClick = (id: number) => {
+    navigate('/butterfly', { state: { eddIg: id } });
   };
 
   return (
@@ -37,10 +40,10 @@ const ButterflyContainerPage: React.FC = () => {
       </div>
       <div style={{ height: 'calc(100vh - 120px)', overflowY: 'auto', overflowX: 'hidden' }} className="custom-scroll">
         <Row gutter={[34, 34]} justify="center">
-          {eggList.map((egg, index) => (
+          {eggList.map((egg, _) => (
             <Col key={egg.id} flex="none">
               <button
-                onClick={() => handleCardClick(index)}
+                onClick={() => handleCardClick(egg.id)}
                 style={{
                   height: '160px',
                   width: '160px',

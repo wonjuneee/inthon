@@ -18,81 +18,81 @@ const ArtPage = () => {
   const [description, setDescription] = useState<string>('');
 
   useEffect(() => {
-    // axios
-    //   .get(`${import.meta.env.VITE_SERVER_URL}/art/get-art?id=${artId}`)
-    //   .then(res => setArt(res.data))
-    //   .catch(err => console.log(err));
+    axios
+      .get(`${import.meta.env.VITE_SERVER_URL}/art/get-art?id=${artId}`)
+      .then(res => setArt(res.data))
+      .catch(err => console.log(err));
 
-    setArt(
-      arts.find(art => art.id === artId) ?? {
-        id: 0,
-        questionIdx: 0,
-        imagePath: null,
-        description: null,
-        createdAt: null,
-        updatedAt: null,
-      }
-    );
+    // setArt(
+    //   arts.find(art => art.id === artId) ?? {
+    //     id: 0,
+    //     questionIdx: 0,
+    //     imagePath: null,
+    //     description: null,
+    //     createdAt: null,
+    //     updatedAt: null,
+    //   }
+    // );
   }, []);
 
-  const arts: Art[] = [
-    {
-      id: 0,
-      questionIdx: 0,
-      imagePath: null,
-      description: null,
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 1,
-      questionIdx: 1,
-      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
-      description: '단풍이 예뻤다.',
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 2,
-      questionIdx: 2,
-      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
-      description: '너무 예뻤다.',
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 3,
-      questionIdx: 3,
-      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
-      description: '단풍이 너무.',
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 4,
-      questionIdx: 4,
-      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
-      description: '예뻤다.',
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 5,
-      questionIdx: 5,
-      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
-      description: '단풍이.',
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 6,
-      questionIdx: 6,
-      imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
-      description: '너무 예뻤다.',
-      createdAt: null,
-      updatedAt: null,
-    },
-  ];
+  // const arts: Art[] = [
+  //   {
+  //     id: 0,
+  //     questionIdx: 0,
+  //     imagePath: null,
+  //     description: null,
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 1,
+  //     questionIdx: 1,
+  //     imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+  //     description: '단풍이 예뻤다.',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 2,
+  //     questionIdx: 2,
+  //     imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+  //     description: '너무 예뻤다.',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 3,
+  //     questionIdx: 3,
+  //     imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+  //     description: '단풍이 너무.',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 4,
+  //     questionIdx: 4,
+  //     imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+  //     description: '예뻤다.',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 5,
+  //     questionIdx: 5,
+  //     imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+  //     description: '단풍이.',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 6,
+  //     questionIdx: 6,
+  //     imagePath: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSFd-sRYfws70s7skdJL_AClKF3dChgTa6Qg&s',
+  //     description: '너무 예뻤다.',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  // ];
   // const art: Art = { id: 0, questionIdx: 0, imagePath: null, description: null, createdAt: null, updatedAt: null };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

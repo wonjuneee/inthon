@@ -22,41 +22,39 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // const username = localStorage.getItem('username');
+    const username = localStorage.getItem('username');
 
-    // async function fetchEggData() {
-    //   try {
-    //     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-current`, {
-    //       params: { username: username },
-    //     });
-    //     if (response.status === 200) {
-    //       setEggData(response.data.egg);
-    //       setArtData(response.data.art);
-    //     }
-    //   } catch (error) {
-    //     console.error('데이터 정보를 가져오는데 오류가 생겼습니다.', error);
-    //   }
-    // }
+    async function fetchEggData() {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-current?username=${username}`);
+        if (response.status === 200) {
+          setEggData(response.data.egg);
+          setArtData(response.data.art);
+        }
+      } catch (error) {
+        console.error('데이터 정보를 가져오는데 오류가 생겼습니다.', error);
+      }
+    }
 
-    // fetchEggData();
-    const egg: Egg = {
-      id: 0,
-      step: 3,
-      color: 0,
-      currArt: 0,
-      totalArt: null,
-    };
-    const art: Art = {
-      id: 0,
-      questionIdx: 0,
-      imagePath: null,
-      description: null,
-      createdAt: null,
-      updatedAt: null,
-    };
+    fetchEggData();
+    // const egg: Egg = {
+    //   id: 0,
+    //   step: 3,
+    //   color: 0,
+    //   currArt: 0,
+    //   totalArt: null,
+    // };
+    // const art: Art = {
+    //   id: 0,
+    //   questionIdx: 0,
+    //   imagePath: null,
+    //   description: null,
+    //   createdAt: null,
+    //   updatedAt: null,
+    // };
 
-    setEggData(egg);
-    setArtData(art);
+    // setEggData(egg);
+    // setArtData(art);
   }, []);
 
   const imageSrc = eggData?.step !== undefined && eggData?.step !== null ? step_images[eggData.step as STEP] : '/assets/egg.png';
@@ -105,7 +103,7 @@ const HomePage: React.FC = () => {
         <Spacer height={40} />
         <div className="flex justify-center items-center relative z-10">
           <button onClick={handleQuestClick} className="flex justify-center items-center">
-            <QuestContainer content={questContent} animate={true} />
+            <QuestContainer content={questContent} animate={artData?.questionIdx != null} />
           </button>
         </div>
         <Button
