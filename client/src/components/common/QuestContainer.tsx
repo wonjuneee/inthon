@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 interface TextContainerProps {
   content: string;
-  animate?: boolean; // animate는 선택적 prop으로 수정
+  animate?: boolean;
 }
 
 export default function QuestContainer({ content, animate = false }: TextContainerProps) {
@@ -49,8 +49,3 @@ export default function QuestContainer({ content, animate = false }: TextContain
     </div>
   );
 }
-
-// animate 기본값을 false로 설정
-QuestContainer.defaultProps = {
-  animate: false,
-};
