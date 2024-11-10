@@ -11,5 +11,5 @@ export class CurrentArtDto {
 
 export class GetCurrentEggsResDto {
   egg: CurrentEggDto;
-  art: CurrentArtDto;
+  art: CurrentArtDto[];
 }

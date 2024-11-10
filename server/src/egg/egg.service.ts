@@ -45,7 +45,7 @@ export class EggService {
 
   async getCurrentEggs(
     username: string
-  ): Promise<{ egg: CurrentEggDto; art: CurrentArtDto }> {
+  ): Promise<{ egg: CurrentEggDto; art: CurrentArtDto[] }> {
     const egg = await this.eggRepository.find({
       order: { idx: 'DESC' },
       where: { username: username, isCuurent: true },
@@ -58,7 +58,7 @@ export class EggService {
       color: egg[0].color,
     };
 
-    const artDto: CurrentArtDto = await this.artService.getArtByEggId(egg[0]);
+    const artDto: CurrentArtDto[] = await this.artService.getArtByEggId(egg[0]);
 
     return { egg: eggDto, art: artDto };
   }

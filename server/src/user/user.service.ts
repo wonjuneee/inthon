@@ -8,12 +8,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EggService } from 'src/egg/egg.service';
 import { Egg } from 'src/egg/egg.entity';
+import { Art } from 'src/art/art.entity';
 
 @Injectable()
 export class EggUserService {
   constructor(
     @InjectRepository(Egg)
-    private eggRepository: Repository<Egg> // Egg Repository 주입,
+    private eggRepository: Repository<Egg>, // Egg Repository 주입,
+    @InjectRepository(Art)
+    private artRepository: Repository<Art> // Art Repositoryp 주입
   ) {}
 
   // 로그인 또는 사용자 생성
@@ -30,7 +33,7 @@ export class EggUserService {
           select: ['id'],
           order: { id: 'DESC' },
           take: 1,
-        })[0]) | 0;
+        })[0]) | -1;
       console.log(maxId);
       egg = this.eggRepository.create({
         username: username,
@@ -41,6 +44,19 @@ export class EggUserService {
         isCuurent: true, // 현재 사용자
       });
       await this.eggRepository.save(egg);
+      const maxArtId =
+        (await this.artRepository.find({
+          select: ['id'],
+          order: { id: 'DESC' },
+          take: 1,
+        })[0]) | -1;
+      const art = this.artRepository.create({
+        id: maxArtId + 1,
+        questionIdx: 0,
+        egg: egg,
+      });
+      console.log(art);
+      await this.artRepository.save(art);
     }
 
     return egg;
