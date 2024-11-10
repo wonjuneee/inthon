@@ -40,8 +40,12 @@ const PerformancePage = () => {
       <Spacer height={8} />
       <p className="subtitle self-start" color="var(--black)">
         장소: {performance?.placeNm}
+      </p>{' '}
+      <Spacer height={8} />
+      <p className="subtitle self-start" color="var(--black)">
+        장소: {performance?.genreNm}
       </p>
-      <Spacer height={24} />
+      <Spacer height={32} />
       <CustomButton text="기록하기" onClick={handleButtonClick} />
     </Layout>
   );

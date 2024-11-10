@@ -32,11 +32,12 @@ const LoginPage: React.FC = () => {
 
   return (
     <Layout className="relative flex flex-col items-center justify-center" style={{ width: '402px', height: '874px', margin: 'auto', overflow: 'hidden' }}>
-      <img src={'/assets/butterfly.png'} className="bg-img" />
-      <div className="relative z-10 flex flex-col items-center " style={{ marginTop: '-250px' }}>
-        <Typography.Title level={4} className="mb-6"></Typography.Title>
-        <Typography.Title level={4}>애벌레키우기</Typography.Title>
-        <Spacer height={24} />
+      <img src={'/assets/butterfly.png'} className="bg-img" style={{ marginTop: '-150px' }} />
+      <div className="relative z-10 flex flex-col items-center">
+        <p className="heading" color="var(--black)">
+          애벌레키우기
+        </p>
+        <Spacer height={300} />
         <Form name="login" layout="vertical">
           <Form.Item name="username" rules={[{ required: true, message: '아이디를 입력해 주세요!' }]}>
             <Input id="username" value={inputs.username} onChange={handleInput} style={{ height: '48px', width: '354px' }} placeholder="아이디" />

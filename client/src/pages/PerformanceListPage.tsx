@@ -24,7 +24,6 @@ const PerformanceListPage = () => {
 
   return (
     <Layout className="layout" style={{ height: '100vh', overflow: 'hidden' }}>
-      <Spacer height={24} />
       <p className="heading" color="var(--black)">
         공연 정보
       </p>
