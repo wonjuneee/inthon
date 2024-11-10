@@ -1,13 +1,13 @@
 import React from 'react';
-import { Layout, Button } from 'antd';
-import QuestContainer from '../components/common/QuestContainer';
-import { STEP, Egg } from '../models/egg';
-import { Art } from '../models/art';
-import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { questions } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Layout, Button } from 'antd';
+import { Art } from '../models/art';
+import { questions } from '../utils/constants';
+import { STEP, Egg } from '../models/egg';
 import Spacer from '../components/common/Spacer';
+import QuestContainer from '../components/common/QuestContainer';
 
 const step_images: Record<STEP, string> = {
   [STEP.egg]: '/assets/egg.png',
@@ -24,37 +24,37 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const username = localStorage.getItem('username');
 
-    // async function fetchEggData() {
-    //   try {
-    //     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-current?username=${username}`);
-    //     if (response.status === 200) {
-    //       setEggData(response.data.egg);
-    //       setArtData(response.data.art);
-    //     }
-    //   } catch (error) {
-    //     console.error('데이터 정보를 가져오는데 오류가 생겼습니다.', error);
-    //   }
-    // }
+    async function fetchEggData() {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-current/${username}`);
+        if (response.status === 200) {
+          setEggData(response.data.egg);
+          setArtData(response.data.art);
+        }
+      } catch (error) {
+        console.error('데이터 정보를 가져오는데 오류가 생겼습니다.', error);
+      }
+    }
 
-    // fetchEggData();
-    const egg: Egg = {
-      id: 0,
-      step: 2,
-      color: 0,
-      currArt: 0,
-      totalArt: null,
-    };
-    const art: Art = {
-      id: 0,
-      questionIdx: 1,
-      imagePath: null,
-      description: null,
-      createdAt: null,
-      updatedAt: null,
-    };
+    fetchEggData();
+    // const egg: Egg = {
+    //   id: 0,
+    //   step: 2,
+    //   color: 0,
+    //   currArt: 0,
+    //   totalArt: null,
+    // };
+    // const art: Art = {
+    //   id: 0,
+    //   questionIdx: 1,
+    //   imagePath: null,
+    //   description: null,
+    //   createdAt: null,
+    //   updatedAt: null,
+    // };
 
-    setEggData(egg);
-    setArtData(art);
+    // setEggData(egg);
+    // setArtData(art);
   }, []);
 
   const imageSrc = eggData?.step !== undefined && eggData?.step !== null ? step_images[eggData.step as STEP] : '/assets/egg.png';

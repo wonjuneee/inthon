@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 
-import { questions } from '../utils/constants';
+import { keywords, questions } from '../utils/constants';
 import QuestContainer from '../components/common/QuestContainer';
 import CustomButton from '../components/common/CustomButton';
 import Spacer from '../components/common/Spacer';
@@ -17,82 +17,86 @@ const ArtPage = () => {
   const [art, setArt] = useState<Art | null>(null);
   const [description, setDescription] = useState<string>('');
 
-  useEffect(() => {
-    // axios
-    //   .get(`${import.meta.env.VITE_SERVER_URL}/art/get-art?id=${artId}`)
-    //   .then(res => setArt(res.data))
-    //   .catch(err => console.log(err));
+  const [imgError, setImgError] = useState<string>('');
 
-    setArt(
-      arts.find(art => art.id === artId) ?? {
-        id: 0,
-        questionIdx: 0,
-        imagePath: null,
-        description: null,
-        createdAt: null,
-        updatedAt: null,
-      }
-    );
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_SERVER_URL}/art/get-art`, {
+        params: { id: artId },
+      })
+      .then(res => setArt(res.data))
+      .catch(err => console.log(err));
+
+    // setArt(
+    //   arts.find(art => art.id === artId) ?? {
+    //     id: 0,
+    //     questionIdx: 0,
+    //     imagePath: null,
+    //     description: null,
+    //     createdAt: null,
+    //     updatedAt: null,
+    //   }
+    // );
   }, []);
 
-  const arts: Art[] = [
-    {
-      id: 0,
-      questionIdx: 1,
-      imagePath: null,
-      description: null,
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 1,
-      questionIdx: 0,
-      imagePath: 'https://github.com/user-attachments/assets/9c2529b1-2719-4dae-aa68-edaea3a9328e',
-      description: '단풍이 예뻤다.',
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 2,
-      questionIdx: 1,
-      imagePath: 'https://github.com/user-attachments/assets/2f6b6b7f-3c22-4a74-9b74-500343e73fdd',
-      description: '너무 예뻤다.',
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 3,
-      questionIdx: 2,
-      imagePath: 'https://github.com/user-attachments/assets/4de52fc4-9850-4c87-a134-90ce41acb974',
-      description: '빨간 머리 엔',
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 4,
-      questionIdx: 3,
-      imagePath: 'https://github.com/user-attachments/assets/929bd706-e2dc-484b-b2fc-08616efbe38b',
-      description: '나는 아름다운 나비~~',
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 5,
-      questionIdx: 4,
-      imagePath: 'https://github.com/user-attachments/assets/3b021c31-f1d4-43f4-8eec-95ef830970eb',
-      description: '책책책책 노잼.',
-      createdAt: null,
-      updatedAt: null,
-    },
-    {
-      id: 6,
-      questionIdx: 5,
-      imagePath: 'https://github.com/user-attachments/assets/b3e2e3f8-9abe-4d71-b1f1-6fbc595f16a3',
-      description: '펑펑 눈이옵니다',
-      createdAt: null,
-      updatedAt: null,
-    },
-  ];
+  // const arts: Art[] = [
+  //   {
+  //     id: 0,
+  //     questionIdx: 1,
+  //     imagePath: null,
+  //     description: null,
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 1,
+  //     questionIdx: 0,
+  //     imagePath: 'https://github.com/user-attachments/assets/9c2529b1-2719-4dae-aa68-edaea3a9328e',
+  //     description: '단풍이 예뻤다.',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 2,
+  //     questionIdx: 1,
+  //     imagePath: 'https://github.com/user-attachments/assets/2f6b6b7f-3c22-4a74-9b74-500343e73fdd',
+  //     description: '너무 예뻤다.',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 3,
+  //     questionIdx: 2,
+  //     imagePath: 'https://github.com/user-attachments/assets/4de52fc4-9850-4c87-a134-90ce41acb974',
+  //     description: '빨간 머리 엔',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 4,
+  //     questionIdx: 3,
+  //     imagePath: 'https://github.com/user-attachments/assets/929bd706-e2dc-484b-b2fc-08616efbe38b',
+  //     description: '나는 아름다운 나비~~',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 5,
+  //     questionIdx: 4,
+  //     imagePath: 'https://github.com/user-attachments/assets/3b021c31-f1d4-43f4-8eec-95ef830970eb',
+  //     description: '책책책책 노잼.',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  //   {
+  //     id: 6,
+  //     questionIdx: 5,
+  //     imagePath: 'https://github.com/user-attachments/assets/b3e2e3f8-9abe-4d71-b1f1-6fbc595f16a3',
+  //     description: '펑펑 눈이옵니다',
+  //     createdAt: null,
+  //     updatedAt: null,
+  //   },
+  // ];
   // const art: Art = { id: 0, questionIdx: 0, imagePath: null, description: null, createdAt: null, updatedAt: null };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -120,19 +124,25 @@ const ArtPage = () => {
     formData.append('image', file);
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/art/upload`,
-        { id: artId, image: formData, description: description },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/art/upload`, { id: artId, image: formData, description: description }, { headers: { 'Content-Type': 'application/json' } });
 
       if (response.status === 201) {
-        if (art?.questionIdx === 6) {
-          navigate('/egg');
+        // ai 호출
+        const imgUrl = response.data.imagePath;
+        const response1 = await axios.post(
+          `${import.meta.env.VITE_SERVER_URL}/art/send-detection`,
+          { imagePath: imgUrl, keyword: keywords[art?.questionIdx!] },
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+
+        if (response1.status == 201) {
+          if (art?.questionIdx === 6) {
+            navigate('/egg');
+          }
+          navigate('/');
+        } else {
+          setImgError('질문과 연관된 사진을 찍으세요!');
         }
-        navigate('/');
       }
       navigate('/');
     } catch (error) {
@@ -276,7 +286,9 @@ const ArtPage = () => {
           <FaCamera size={64} color="var(--primary)" />
         </button>
       )}
-
+      <p className="sub-body self-start" style={{ color: 'red' }}>
+        {imgError}
+      </p>
       <Spacer height={40} />
 
       <p className="title self-start" color="var(--black)">
