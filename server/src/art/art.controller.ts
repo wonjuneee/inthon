@@ -28,8 +28,8 @@ export class ArtController {
     return await this.artService.getTotalArt(id, idx);
   }
 
-  @Get('get-art')
-  async getArt(@Param('id') id: number): Promise<GetArtResDto> {
+  @Get('get-art/:id')
+  async getArt(@Param('id') id: number): Promise<GetArtResDto[]> {
     this.logger.log('Get art data');
     if (!id) throw new BadRequestException('id가 전송되지 않았습니다.');
     return this.artService.getArt(id);
