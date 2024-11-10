@@ -28,7 +28,7 @@ const PerformancePage = () => {
 
   return (
     <Layout className="layout">
-      <img src={performance?.poster} style={{ width: '354px', height: 'auto' }} />
+      <img src={performance?.poster} style={{ width: '354px', height: 'auto', objectFit: 'cover' }} />
       <Spacer height={40} />
       <p className="title self-start" color="var(--black)">
         {performance?.prfNm}
@@ -40,8 +40,12 @@ const PerformancePage = () => {
       <Spacer height={8} />
       <p className="subtitle self-start" color="var(--black)">
         장소: {performance?.placeNm}
+      </p>{' '}
+      <Spacer height={8} />
+      <p className="subtitle self-start" color="var(--black)">
+        장소: {performance?.genreNm}
       </p>
-      <Spacer height={24} />
+      <Spacer height={32} />
       <CustomButton text="기록하기" onClick={handleButtonClick} />
     </Layout>
   );

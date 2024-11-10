@@ -2,6 +2,7 @@ import { Layout, Typography, Row, Col, Card } from 'antd';
 import axios from 'axios';
 import { Egg } from '../models/egg';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const color_images: { [key: number]: string } = {
   1: '/assets/egg_yellow.png',
@@ -11,30 +12,33 @@ const color_images: { [key: number]: string } = {
 };
 
 //더미 테스트
-// const dummyEggs: Egg[] = [
-//   { id: 1, step: 0, color: 1, currArt: 1, totalArt: 'Art for egg 1' },
-//   { id: 2, step: 0, color: 2, currArt: 2, totalArt: 'Art for egg 2' },
-//   { id: 3, step: 0, color: 3, currArt: 3, totalArt: 'Art for egg 3' },
-//   { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
-// ];
+const dummyEggs: Egg[] = [
+  { id: 1, step: 0, color: 1, currArt: 1, totalArt: 'Art for egg 1' },
+  { id: 2, step: 0, color: 2, currArt: 2, totalArt: 'Art for egg 2' },
+  { id: 3, step: 0, color: 3, currArt: 3, totalArt: 'Art for egg 3' },
+  { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+  { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+  { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+  { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+  { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+  { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+];
 
 const EggPage: React.FC = () => {
   const [eggList, setEggList] = useState<Egg[]>([]);
+  const navigate = useNavigate();
+
   //더미 테스트용 코드
-  //   const [user, setUser] = useState<{ username: string; currEgg: number } | null>({ username: 'test_user', currEgg: 1 });
+  // const [user, setUser] = useState<{ username: string; currEgg: number } | null>({ username: 'test_user', currEgg: 1 });
 
-  //   useEffect(() => {
-  //     // API 대신 더미 데이터 사용
-  //     setEggList(dummyEggs);
-  //   }, []);
+  // useEffect(() => {
+  //   // API 대신 더미 데이터 사용
+  //   setEggList(dummyEggs);
+  // }, []);
 
-  //   const handleCardClick = (index: number) => {
-  //     if (!user) return;
-
-  //     const selectedEgg = eggList[index];
-  //     setUser(prev => (prev ? { ...prev, currEgg: selectedEgg.id } : null));
-  //     localStorage.setItem('user', JSON.stringify({ ...user, currEgg: selectedEgg.id }));
-  //   };
+  // const handleCardClick = (index: number) => {
+  //   navigate('/');
+  // };
 
   const username = localStorage.getItem('username');
 
@@ -62,6 +66,7 @@ const EggPage: React.FC = () => {
         username: username,
         id: selectedEgg.id,
       });
+      navigate('/');
     } catch (error) {
       console.error('선택한 알을 업데이트하는 중 오류가 발생했습니다.', error);
     }
@@ -74,41 +79,43 @@ const EggPage: React.FC = () => {
           알 보관함
         </Typography.Title>
       </div>
-      <Row gutter={[34, 34]} justify="center">
-        {eggList.map((egg, index) => (
-          <Col key={egg.id} flex="none">
-            <button
-              onClick={() => handleCardClick(index)}
-              style={{
-                height: '160px',
-                width: '160px',
-                borderRadius: '10px',
-                background: 'var(--primaryContainer, #F2F6F0)',
-                boxShadow: '0px 0px 16px 0px rgba(37, 37, 37, 0.10)',
-                flexShrink: 0,
-                border: 'none',
-                cursor: 'pointer',
-                padding: 0,
-              }}
-            >
-              <Card style={{ height: '100%', width: '100%', borderRadius: '10px', overflow: 'hidden', background: 'transparent', boxShadow: 'none', flexShrink: 0 }}>
-                <img
-                  src={color_images[egg.color] || '/assets/egg.png'}
-                  alt="Egg"
-                  style={{
-                    transform: 'scale(1.8) translateY(-33%)',
-                    position: 'relative',
-                    width: '400px', // 이미지 확대
-                    height: 'auto',
-                    objectFit: 'cover',
-                    objectPosition: 'center',
-                  }}
-                />
-              </Card>
-            </button>
-          </Col>
-        ))}
-      </Row>
+      <div style={{ height: 'calc(100vh - 120px)', overflowY: 'auto', overflowX: 'hidden' }} className="custom-scroll">
+        <Row gutter={[34, 34]} justify="center">
+          {eggList.map((egg, index) => (
+            <Col key={egg.id} flex="none">
+              <button
+                onClick={() => handleCardClick(index)}
+                style={{
+                  height: '160px',
+                  width: '160px',
+                  borderRadius: '10px',
+                  background: 'var(--primaryContainer, #F2F6F0)',
+                  boxShadow: '0px 0px 16px 0px rgba(37, 37, 37, 0.10)',
+                  flexShrink: 0,
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                }}
+              >
+                <Card style={{ height: '100%', width: '100%', borderRadius: '10px', overflow: 'hidden', background: 'transparent', boxShadow: 'none', flexShrink: 0 }}>
+                  <img
+                    src={color_images[egg.color] || '/assets/egg.png'}
+                    alt="Egg"
+                    style={{
+                      transform: 'scale(1.8) translateY(-33%)',
+                      position: 'relative',
+                      width: '400px', // 이미지 확대
+                      height: 'auto',
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                    }}
+                  />
+                </Card>
+              </button>
+            </Col>
+          ))}
+        </Row>
+      </div>
     </Layout>
   );
 };

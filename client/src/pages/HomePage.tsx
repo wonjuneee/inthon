@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { questions } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
+import Spacer from '../components/common/Spacer';
 
 const step_images: Record<STEP, string> = {
   [STEP.egg]: '/assets/egg.png',
@@ -21,13 +22,11 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // const username = localStorage.getItem('username');
+    const username = localStorage.getItem('username');
 
     // async function fetchEggData() {
     //   try {
-    //     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-current`, {
-    //       params: { username: username },
-    //     });
+    //     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/egg/get-current?username=${username}`);
     //     if (response.status === 200) {
     //       setEggData(response.data.egg);
     //       setArtData(response.data.art);
@@ -40,14 +39,14 @@ const HomePage: React.FC = () => {
     // fetchEggData();
     const egg: Egg = {
       id: 0,
-      step: 3,
+      step: 2,
       color: 0,
       currArt: 0,
       totalArt: null,
     };
     const art: Art = {
       id: 0,
-      questionIdx: 0,
+      questionIdx: 1,
       imagePath: null,
       description: null,
       createdAt: null,
@@ -76,9 +75,14 @@ const HomePage: React.FC = () => {
     navigate('/performance-list');
   };
 
+  const handleButterflyClick = () => {
+    navigate('/butterfly-container');
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
       <Layout style={{ width: 402, height: 874, background: 'var(--secondary)', position: 'relative', overflow: 'hidden' }}>
+        <Spacer height={80} />
         <img src={backgroundImageSrc} className="bg-img" />
         <img src={imageSrc} className="bg-img" />
         <button
@@ -96,12 +100,11 @@ const HomePage: React.FC = () => {
             pointerEvents: eggData?.step === STEP.butterfly ? 'auto' : 'none',
           }}
         ></button>
+        <Spacer height={40} />
         <div className="flex justify-center items-center relative z-10">
-          <div className="p-16">
-            <button onClick={handleQuestClick} className="flex justify-center items-center">
-              <QuestContainer content={questContent} />
-            </button>
-          </div>
+          <button onClick={handleQuestClick} className="flex justify-center items-center">
+            <QuestContainer content={questContent} animate={true} />
+          </button>
         </div>
         <Button
           type="primary"
@@ -110,21 +113,51 @@ const HomePage: React.FC = () => {
           style={{
             width: '60px',
             height: '60px',
-            bottom: '570px',
+            bottom: '530px',
             right: '24px',
             backgroundColor: 'transparent',
+            padding: 0, // 버튼의 내부 여백을 0으로 설정하여 이미지가 버튼에 맞도록 합니다.
+            overflow: 'hidden', // 버튼 영역 밖으로 이미지가 나가지 않도록 설정
+            borderRadius: '50%', // 원형 버튼을 만들기 위해 borderRadius 설정
           }}
           onClick={handleButtonClick}
         >
           <img
             src="/assets/egg.png"
             style={{
-              transform: 'scale(1.8) translateY(-17%)',
-              position: 'relative',
-              width: '60px', // 이미지 확대
+              transform: 'scale(1.8) translateY(-17%)', // 이미지 크기 확대 및 위치 조정
+              width: '60px', // 이미지 크기를 버튼에 맞게 100%로 설정
               height: 'auto',
-              objectFit: 'cover',
-              objectPosition: 'center',
+              objectFit: 'cover', // 이미지가 버튼 크기에 맞게 잘리도록 설정
+              objectPosition: 'center', // 이미지의 중심을 버튼의 중심에 맞추기
+            }}
+          />
+        </Button>
+
+        {/* 나비 버튼 */}
+        <Button
+          type="primary"
+          shape="circle"
+          className="absolute shadow-lg"
+          style={{
+            width: '60px',
+            height: '60px',
+            bottom: '530px',
+            left: '24px',
+            backgroundColor: 'transparent',
+            padding: 0, // 버튼의 내부 여백을 0으로 설정하여 이미지가 버튼에 맞도록 합니다.
+            borderRadius: '50%', // 원형 버튼을 만들기 위해 borderRadius 설정
+          }}
+          onClick={handleButterflyClick}
+        >
+          <img
+            src="/assets/butterfly.png"
+            style={{
+              transform: 'scale(1.8) translateY(-8%)', // 이미지 크기 확대 및 위치 조정
+              width: '60px', // 이미지 크기를 버튼에 맞게 100%로 설정
+              height: 'auto',
+              objectFit: 'cover', // 이미지가 버튼 크기에 맞게 잘리도록 설정
+              objectPosition: 'center', // 이미지의 중심을 버튼의 중심에 맞추기
             }}
           />
         </Button>
