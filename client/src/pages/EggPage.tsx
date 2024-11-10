@@ -16,6 +16,11 @@ const color_images: { [key: number]: string } = {
 //   { id: 2, step: 0, color: 2, currArt: 2, totalArt: 'Art for egg 2' },
 //   { id: 3, step: 0, color: 3, currArt: 3, totalArt: 'Art for egg 3' },
 //   { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+//   { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+//   { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+//   { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+//   { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
+//   { id: 4, step: 0, color: 4, currArt: 4, totalArt: 'Art for egg 4' },
 // ];
 
 const EggPage: React.FC = () => {
@@ -74,41 +79,43 @@ const EggPage: React.FC = () => {
           알 보관함
         </Typography.Title>
       </div>
-      <Row gutter={[34, 34]} justify="center">
-        {eggList.map((egg, index) => (
-          <Col key={egg.id} flex="none">
-            <button
-              onClick={() => handleCardClick(index)}
-              style={{
-                height: '160px',
-                width: '160px',
-                borderRadius: '10px',
-                background: 'var(--primaryContainer, #F2F6F0)',
-                boxShadow: '0px 0px 16px 0px rgba(37, 37, 37, 0.10)',
-                flexShrink: 0,
-                border: 'none',
-                cursor: 'pointer',
-                padding: 0,
-              }}
-            >
-              <Card style={{ height: '100%', width: '100%', borderRadius: '10px', overflow: 'hidden', background: 'transparent', boxShadow: 'none', flexShrink: 0 }}>
-                <img
-                  src={color_images[egg.color] || '/assets/egg.png'}
-                  alt="Egg"
-                  style={{
-                    transform: 'scale(1.8) translateY(-33%)',
-                    position: 'relative',
-                    width: '400px', // 이미지 확대
-                    height: 'auto',
-                    objectFit: 'cover',
-                    objectPosition: 'center',
-                  }}
-                />
-              </Card>
-            </button>
-          </Col>
-        ))}
-      </Row>
+      <div style={{ height: 'calc(100vh - 120px)', overflowY: 'auto', overflowX: 'hidden' }} className="custom-scroll">
+        <Row gutter={[34, 34]} justify="center">
+          {eggList.map((egg, index) => (
+            <Col key={egg.id} flex="none">
+              <button
+                onClick={() => handleCardClick(index)}
+                style={{
+                  height: '160px',
+                  width: '160px',
+                  borderRadius: '10px',
+                  background: 'var(--primaryContainer, #F2F6F0)',
+                  boxShadow: '0px 0px 16px 0px rgba(37, 37, 37, 0.10)',
+                  flexShrink: 0,
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                }}
+              >
+                <Card style={{ height: '100%', width: '100%', borderRadius: '10px', overflow: 'hidden', background: 'transparent', boxShadow: 'none', flexShrink: 0 }}>
+                  <img
+                    src={color_images[egg.color] || '/assets/egg.png'}
+                    alt="Egg"
+                    style={{
+                      transform: 'scale(1.8) translateY(-33%)',
+                      position: 'relative',
+                      width: '400px', // 이미지 확대
+                      height: 'auto',
+                      objectFit: 'cover',
+                      objectPosition: 'center',
+                    }}
+                  />
+                </Card>
+              </button>
+            </Col>
+          ))}
+        </Row>
+      </div>
     </Layout>
   );
 };

@@ -35,7 +35,6 @@ const PerformanceListPage = () => {
           justify="center"
           style={{
             position: 'sticky',
-            top: 0,
           }}
         >
           {Array.from(performances).map((performance, index) => (
