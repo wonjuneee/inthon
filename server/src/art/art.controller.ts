@@ -67,17 +67,9 @@ export class ArtController {
 
       // score에 따른 조건 처리
       if (score && score >= 0.9) {
-        // 성공적인 경우 201 상태 코드와 메시지 반환
-        return {
-          statusCode: HttpStatus.CREATED,
-          message: 'correct!',
-        };
+        return { message: 'correct!' };
       } else {
-        // 조건에 맞지 않을 경우 400 Bad Request 에러 발생
-        throw new HttpException(
-          'Score is not high enough',
-          HttpStatus.BAD_REQUEST
-        );
+        return { message: 'not correct' };
       }
     } catch (error) {
       console.error('Error sending request to FastAPI:', error);
