@@ -1,8 +1,7 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Egg } from './egg.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserService } from 'src/user/user.service';
 import { ButterflyDto } from './dto/get-butterflies-req.dto';
 import { GetEggsResDto } from './dto/get-eggs-res.dto';
 import { CurrentArtDto, CurrentEggDto } from './dto/get-current-eggs-req.dto';
@@ -11,39 +10,29 @@ import { CurrentArtDto, CurrentEggDto } from './dto/get-current-eggs-req.dto';
 export class EggService {
   constructor(
     @InjectRepository(Egg)
-    private eggRepository: Repository<Egg>,
-    @Inject(forwardRef(() => UserService))
-    private readonly userService: UserService
+    private eggRepository: Repository<Egg>
   ) {}
 
-  async createEgg(username: string): Promise<Egg> {
-    const user = await this.userService.getUser(username);
-    const egg = this.eggRepository.create({ user: user });
-    await this.eggRepository.save(egg);
-    return egg;
-  }
-
-  async getEgg(id: number): Promise<Egg> {
-    const egg = await this.eggRepository.findOne({ where: { id } });
+  async getEgg(id: number, idx: number): Promise<Egg> {
+    const egg = await this.eggRepository.findOne({
+      where: { id: id, idx: idx },
+    });
     return egg;
   }
 
   async getEggs(username: string): Promise<GetEggsResDto[]> {
-    const user = await this.userService.getUser(username);
-    const currEgg = user.currEgg;
     const eggs: GetEggsResDto[] = await this.eggRepository.find({
       select: ['id', 'color'],
-      where: { user: user, step: 0, currEgg: !currEgg } as any,
+      where: { username: username, step: 0, isCurrent: false } as any,
     });
 
     return eggs;
   }
 
   async getButterflies(username: string): Promise<ButterflyDto[]> {
-    const user = await this.userService.getUser(username);
     const eggs = await this.eggRepository.find({
       select: ['id', 'color'],
-      where: { user: user, step: 3 } as any,
+      where: { username: username, step: 3 } as any,
     });
 
     return eggs.map((egg) => {
@@ -53,25 +42,25 @@ export class EggService {
 
   async getCurrentEggs(
     username: string
-  ): Promise<{ egg: CurrentEggDto[]; art: CurrentArtDto[] }> {
-    const user = await this.userService.getUser(username);
-    const eggs = await this.eggRepository.find({
-      where: { user: user } as any,
+  ): Promise<{ egg: CurrentEggDto; art: CurrentArtDto }> {
+    const egg = await this.eggRepository.find({
+      order: { idx: 'DESC' },
+      where: { username: username, isCuurent: true },
+      take: 1,
     });
 
-    const eggDtos: CurrentEggDto[] = eggs.map((egg) => ({
-      id: egg.id,
-      step: egg.step,
-      color: egg.color,
-    }));
+    const eggDto: CurrentEggDto = {
+      id: egg[0].id,
+      step: egg[0].step,
+      color: egg[0].color,
+    };
 
-    const artDtos: CurrentArtDto[] = eggs
-      .filter((egg) => egg.currArt) // currArt가 존재하는 경우에만
-      .map((egg) => ({
-        id: egg.currArt.id,
-        questionIdx: egg.currArt.questionIdx,
-      }));
+    const artDto: CurrentArtDto = egg[0].currArt;
 
-    return { egg: eggDtos, art: artDtos };
+    return { egg: eggDto, art: artDto };
+  }
+
+  async getEggByUser(username: string): Promise<Egg> {
+    return await this.eggRepository.findOne({ where: { username: username } });
   }
 }

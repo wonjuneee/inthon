@@ -4,7 +4,6 @@ import {
   Get,
   Logger,
   Param,
-  Query,
 } from '@nestjs/common';
 import { EggService } from './egg.service';
 import { GetButterfliesResDto } from './dto/get-butterflies-req.dto';
@@ -29,18 +28,18 @@ export class EggController {
     @Param('username') username: string
   ): Promise<GetButterfliesResDto> {
     this.logger.log('Get butterflies data');
-    if (!username)
+    if (username === undefined)
       throw new BadRequestException('username이 전송되지 않았습니다.');
     const butterflies = await this.eggService.getButterflies(username);
     return { eggs: butterflies };
   }
 
-  @Get('get-current/')
+  @Get('get-current/:username')
   async getCurrentEggs(
-    @Query('username') username: string
+    @Param('username') username: string
   ): Promise<GetCurrentEggsResDto> {
     this.logger.log('Get current eggs data');
-    if (!username)
+    if (username === undefined)
       throw new BadRequestException('username이 존재하지 않습니다.');
     const { egg, art } = await this.eggService.getCurrentEggs(username);
 

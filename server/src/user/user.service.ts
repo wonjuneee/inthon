@@ -1,48 +1,76 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, UpdateResult } from 'typeorm';
-import { User } from './user.entity';
-import { Egg } from 'src/egg/egg.entity';
+import { Repository } from 'typeorm';
 import { EggService } from 'src/egg/egg.service';
+import { Egg } from 'src/egg/egg.entity';
 
 @Injectable()
-export class UserService {
+export class EggUserService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    @InjectRepository(Egg)
+    private eggRepository: Repository<Egg>, // Egg Repository 주입,
     private eggService: EggService
   ) {}
 
-  async login(username: string): Promise<User> {
-    let user = await this.userRepository.findOne({
+  // 로그인 또는 사용자 생성
+  async login(username: string): Promise<Egg> {
+    // username으로 Egg 조회
+    let egg = await this.eggRepository.findOne({
       where: { username: username },
     });
 
-    if (!user) {
-      const user: User = this.userRepository.create({ username: username });
-      await this.userRepository.save(user);
-      const egg: Egg = await this.eggService.createEgg(username);
-      await this.userRepository.update({ username }, { currEgg: egg });
+    // Egg가 없으면 새로 생성
+    if (!egg) {
+      egg = this.eggRepository.create({
+        username: username,
+        step: 0, // 초기값 설정
+        color: 0, // 초기값 설정
+      });
+      await this.eggRepository.save(egg);
     }
 
-    return user;
+    return egg;
   }
 
-  async getUser(username: string): Promise<User> {
-    const user = await this.userRepository.findOne({
+  // username으로 Egg 조회
+  async getUser(username: string): Promise<Egg> {
+    const egg = await this.eggRepository.findOne({
       where: { username: username },
     });
-    if (!user) {
+    if (!egg) {
       throw new BadRequestException('존재하지 않는 유저입니다.');
     }
-    return user;
+    return egg;
   }
 
-  async updateCurrEgg(username: string, id: number): Promise<UpdateResult> {
-    const egg = await this.eggService.getEgg(id);
-    return await this.userRepository.update(
-      { username: username },
-      { currEgg: egg }
-    );
+  // 현재 사용자의 currArt 업데이트
+  // async updateCurrArt(
+  //   username: string,
+  //   currArtId: number
+  // ): Promise<UpdateResult> {
+  //   // currArt를 업데이트
+  //   return await this.eggRepository.update(
+  //     { username: username },
+  //     { currArt: currArtId }
+  //   );
+  // }
+
+  async updateCurrEgg(username: string, id: number, idx: number): Promise<Egg> {
+    const egg = this.eggRepository.create({
+      username: username,
+      id: id,
+      idx: idx + 1,
+    });
+    return await this.eggRepository.save(egg);
+  }
+
+  // 새로운 Egg 생성 (테스트 용도)
+  async createEgg(username: string): Promise<Egg> {
+    const egg = this.eggRepository.create({
+      username: username,
+      step: 0,
+      color: 0,
+    });
+    return await this.eggRepository.save(egg);
   }
 }

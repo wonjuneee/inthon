@@ -1,29 +1,34 @@
 import { CommonEntity } from 'src/common/common.entity';
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   OneToOne,
   OneToMany,
-  ManyToOne,
   JoinColumn,
+  Check,
+  PrimaryColumn,
 } from 'typeorm';
 import { Art } from 'src/art/art.entity';
-import { User } from 'src/user/user.entity';
 
 @Entity('Egg')
+@Check('"step" >= 0 AND "step" <= 3')
+@Check('"idx" >= 0 AND "idx" <= 6')
 export class Egg extends CommonEntity {
   constructor() {
     super();
     this.color = Math.floor(Math.random() * 4);
   }
+  @PrimaryColumn({ type: 'varchar', length: 15 })
+  username: string;
 
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: number;
 
+  @PrimaryColumn()
+  idx: number;
+
   @Column({
-    type: 'enum',
-    enum: [0, 1, 2, 3],
+    type: 'int',
     default: 0,
   })
   step: number;
@@ -31,11 +36,8 @@ export class Egg extends CommonEntity {
   @Column()
   color: number;
 
-  @ManyToOne(() => User, (user) => user.username)
-  user: User;
-
-  @OneToOne(() => User, (user) => user.currEgg)
-  currEgg: User;
+  @Column({ type: 'boolean', default: false })
+  isCuurent: boolean;
 
   @OneToOne(() => Art, (art) => art.egg)
   @JoinColumn({ name: 'art' })

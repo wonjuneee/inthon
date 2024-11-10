@@ -5,7 +5,6 @@ import {
   Column,
   OneToOne,
   ManyToOne,
-  OneToMany,
 } from 'typeorm';
 import { Egg } from 'src/egg/egg.entity';
 
