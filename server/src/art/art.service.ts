@@ -36,10 +36,12 @@ export class ArtService {
     });
   }
 
-  async getArtByEggId(egg: Egg): Promise<Art> {
-    return this.artRepository.find({
+  async getArtByEggId(egg: Egg): Promise<Art[]> {
+    const art = await this.artRepository.find({
       select: ['id', 'questionIdx'],
       where: { egg: egg },
-    })[0];
+    });
+
+    return art;
   }
 }
