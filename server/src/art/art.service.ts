@@ -22,8 +22,8 @@ export class ArtService {
     return arts;
   }
 
-  async getArt(id: number): Promise<Art> {
-    return this.artRepository.findOne({
+  async getArt(id: number): Promise<Art[]> {
+    return this.artRepository.find({
       select: [
         'id',
         'questionIdx',
