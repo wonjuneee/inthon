@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  forwardRef,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EggService } from 'src/egg/egg.service';
@@ -8,8 +13,7 @@ import { Egg } from 'src/egg/egg.entity';
 export class EggUserService {
   constructor(
     @InjectRepository(Egg)
-    private eggRepository: Repository<Egg>, // Egg Repository 주입,
-    private eggService: EggService
+    private eggRepository: Repository<Egg> // Egg Repository 주입,
   ) {}
 
   // 로그인 또는 사용자 생성
@@ -21,10 +25,20 @@ export class EggUserService {
 
     // Egg가 없으면 새로 생성
     if (!egg) {
+      const maxId =
+        (await this.eggRepository.find({
+          select: ['id'],
+          order: { id: 'DESC' },
+          take: 1,
+        })[0]) | 0;
+      console.log(maxId);
       egg = this.eggRepository.create({
         username: username,
+        id: maxId + 1, // id는 가장 큰 id + 1
+        idx: 0, // 초기값 설정
         step: 0, // 초기값 설정
         color: 0, // 초기값 설정
+        isCuurent: true, // 현재 사용자
       });
       await this.eggRepository.save(egg);
     }

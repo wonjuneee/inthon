@@ -1,16 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Egg } from './egg.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ButterflyDto } from './dto/get-butterflies-req.dto';
 import { GetEggsResDto } from './dto/get-eggs-res.dto';
 import { CurrentArtDto, CurrentEggDto } from './dto/get-current-eggs-req.dto';
+import { ArtService } from 'src/art/art.service';
 
 @Injectable()
 export class EggService {
   constructor(
     @InjectRepository(Egg)
-    private eggRepository: Repository<Egg>
+    private eggRepository: Repository<Egg>,
+    @Inject(forwardRef(() => ArtService))
+    private artService: ArtService
   ) {}
 
   async getEgg(id: number, idx: number): Promise<Egg> {
@@ -55,7 +58,7 @@ export class EggService {
       color: egg[0].color,
     };
 
-    const artDto: CurrentArtDto = egg[0].currArt;
+    const artDto: CurrentArtDto = await this.artService.getArtByEggId(egg[0]);
 
     return { egg: eggDto, art: artDto };
   }
