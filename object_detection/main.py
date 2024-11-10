@@ -39,5 +39,4 @@ async def detect(request: DetectionRequest):
         "imagePath": request.imagePath,
         "labels": request.labels
     })
-    
     return {"score": float(output[0]['score'])}

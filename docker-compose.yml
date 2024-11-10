@@ -4,7 +4,7 @@ networks:
     name: inthon-bridge
 
 services:
-  object_detection:
+  object-detection:
     image: object
     build:
       context: ./object_detection  # object_detection 폴더로 설정
@@ -19,7 +19,7 @@ services:
     # environment:
     #   - NESTJS_URL=http://nestjs:3000
 
-  culture_info:
+  culture-info:
     image: culture_info
     build:
       context: ./culture_info  # culture_info 폴더로 설정
@@ -40,7 +40,7 @@ services:
     env_file:
       - ./server/.env.dev
     ports:
-      - "8501:8501"
+      - "8185:8185"
     container_name: nest-backend
     networks:
       - inthon-bridge
